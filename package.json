@@ -1,0 +1,10 @@
+{
+  "name": "chaus-graphql-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ThunderLight25 <cogsteeler2@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "graphql-yoga": "^1.13.1"
+  }
+}
