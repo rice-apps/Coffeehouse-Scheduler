@@ -1,63 +1,57 @@
 // This is how we use GraphQL & Express together
 const { GraphQLServer } = require('graphql-yoga')
+// This is how we can use Prisma for context
+const { Prisma } = require('prisma-binding')
 
-// For resolver
-let links = [{
-  id: 'link-0',
-  url: 'www.howtographql.com',
-  description: 'Fullstack tutorial for GraphQL'
-}]
-let idCount = links.length
 // Defines our resolvers, or the actions/methods we can use to
 // interact with schema
 const resolvers = {
-  // Available query methods (essentially GET requests)
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
-    feed: () => links,
-    link: (root, args) => links.find((link) => link.id == args.id)
-    // link(id: ID!): Link
+    feed: (root, args, context, info) => {
+      // context.db -- db is a prisma binding which turns the prisma db into
+      // invokable javascript functions
+      // context.db.query -- makes a query
+      // context.db.query.links -- accesses array of Link objects
+      // first parameter ({}) would contain variables
+      // second parameter forwards along the selectionset info
+      return context.db.query.links({}, info)
+    },
   },
-  // These methods can change our data
   Mutation: {
     /*
     Inputs
       root: Link object that you're creating, which is what this mutation returns
       args: object containing args specified in schema (url, description)
+      context: allows resolvers to communicate with each other; able to pass data
+      and functions to the resolvers
+      info: carries info on the incoming GraphQL query
     */
-    post: (root, args) => {
-       const link = {
-        id: `link-${idCount++}`,
-        description: args.description,
-        url: args.url,
-      }
-      links.push(link)
-      return link
+    post: (root, args, context, info) => {
+      return context.db.mutation.createLink({
+        data: {
+          url: args.url,
+          description: args.description,
+        },
+      }, info)
     },
-    updateLink: (root, args) => {
-      // Find existing link
-      var curLink = links.find((link) => link.id == args.id)
-      if (args.url != null)
-        curLink.url = args.url
-      if (args.description != null)
-        curLink.description = args.description
-      return curLink
-    },
-    deleteLink: (root, args) => {
-      // Find existing link index
-      const linkIndex = links.findIndex((link) => link.id == args.id);
-      // Get existing link to return
-      const formerLink = links[linkIndex]
-      links.splice(linkIndex, 1);
-      return formerLink
-    }
   },
 }
 
-// Initializes server based on schema & resolvers
+
+// Initializes server based on schema, resolvers, context (prisma-bindings)
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
+  context: (req) => ({
+    ...req,
+    db: new Prisma({
+      typeDefs: 'src/generated/prisma.graphql',
+      endpoint: 'https://us1.prisma.sh/public-flameloon-112/hackernews-node/dev',
+      secret: 'mysecret123',
+      debug: true,
+    }),
+  }),
 })
 // Starts server
 server.start(() => console.log(`Server is running on http://localhost:4000`))

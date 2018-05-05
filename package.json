@@ -5,6 +5,7 @@
   "author": "ThunderLight25 <cogsteeler2@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "graphql-yoga": "^1.13.1"
+    "graphql-yoga": "^1.13.1",
+    "prisma-binding": "^1.5.18"
   }
 }
