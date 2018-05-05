@@ -7,7 +7,22 @@ type Query {
 }
 
 type Mutation {
+  # Link mutations
   post(url: String!, description: String!): Link!
-  updateLink(id: ID!, url: String, description: String): Link
-  deleteLink(id: ID!): Link!
+  # User mutations
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+# Why redefine? To hide password from outside observers
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  links: [Link!]!
 }
