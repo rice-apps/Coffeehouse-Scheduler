@@ -14,6 +14,7 @@ datamodel: datamodel.graphql
 secret: mysecret123
 
 #cluster: public-flameloon-112/prisma-us1
+
 # endpoint: https://us1.prisma.sh/public-flameloon-112/hackernews-node/dev
 
 endpoint: https://us1.prisma.sh/public-flameloon-112/hackernews-node/dev

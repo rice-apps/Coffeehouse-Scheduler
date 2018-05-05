@@ -67,8 +67,36 @@ function post(parent, args, context, info) {
   )
 }
 
+async function vote(parent, args, context, info) {
+  // Validation of user
+  const userId = getUserId(context)
+
+  // Check if the user has already voted
+  const linkExists = await context.db.exists.Vote({
+    user: { id: userId },
+    // Link ID is an arg from schema
+    link: { id: args.linkId },
+  })
+  if (linkExists) {
+    throw new Error(`Already voted for link: ${args.linkId}`)
+  }
+
+  // If user hasn't already voted, create a vote object
+  return context.db.mutation.createVote(
+    {
+      data: {
+        // Associate UserID and LinkID to Vote
+        user: { connect: { id: userId } },
+        link: { connect: { id: args.linkId } },
+      },
+    },
+    info,
+  )
+}
+
 module.exports = {
     signup,
     login,
     post,
+    vote
 }
