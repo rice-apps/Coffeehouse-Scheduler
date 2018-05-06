@@ -6,12 +6,12 @@ const { Prisma } = require('prisma-binding')
 // Resolvers: Allow us to interact with our DB in specified ways
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
-const AuthPayload = require('./resolvers/AuthPayload')
-const Subscription = require('./resolvers/Subscription')
-const Feed = require('./resolvers/Feed')
+// const AuthPayload = require('./resolvers/AuthPayload')
+// const Subscription = require('./resolvers/Subscription')
+// const Feed = require('./resolvers/Feed')
 // Create resolver object
 const resolvers = {
-  Query, Mutation, AuthPayload, Subscription, Feed
+  Query, Mutation
 }
 
 
@@ -28,9 +28,9 @@ const server = new GraphQLServer({
       // This is generated from our .graphqlconfig.yml file
       typeDefs: 'src/generated/prisma.graphql',
       // Endpoint of our Prisma DB
-      endpoint: 'https://us1.prisma.sh/public-flameloon-112/hackernews-node/dev',
+      endpoint: 'https://us1.prisma.sh/public-ironfinger-896/chaus-graphql/dev',
       // Since we are interacting with our Prisma Backend, we need its secret to access
-      secret: 'mysecret123',
+      secret: 'itsCHAUSbiatches',
       debug: true,
     }),
   }),

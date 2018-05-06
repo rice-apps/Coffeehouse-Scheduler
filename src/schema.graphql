@@ -1,39 +1,21 @@
-# import Link, LinkSubscriptionPayload, Vote, VoteSubscriptionPayload, LinkOrderByInput from "./generated/prisma.graphql"
+# import User from "./generated/prisma.graphql"
 
 type Query {
-  info: String!
-  feed(filter: String, skip: Int, first: Int, orderBy: LinkOrderByInput): Feed!
+  # Fetch all users or filter by first name, last name, or netid
+  users(filter: String): [User!]
 }
 
 type Mutation {
-  # Link mutations
-  post(url: String!, description: String!): Link!
   # User mutations
-  signup(email: String!, password: String!, name: String!): AuthPayload
-  login(email: String!, password: String!): AuthPayload
-  # For Voting
-  vote(linkId: ID!): Vote
+  createUser(netid: String!): User!
+  updateUser(netid: String, firstName: String, lastName: String,
+              minHour: Int, maxHour: Int, totalHours: Int): User!
+  deleteUser(netid: String!): User!
+  # signup(email: String!, password: String!, name: String!): AuthPayload
+  # login(email: String!, password: String!): AuthPayload
 }
 
-type Feed {
-  links: [Link!]!
-  count: Int!
-}
-
-type AuthPayload {
-  token: String
-  user: User
-}
-
-# Why redefine? To hide password from outside observers
-type User {
-  id: ID!
-  name: String!
-  email: String!
-  links: [Link!]!
-}
-
-type Subscription {
-  newLink: LinkSubscriptionPayload
-  newVote: VoteSubscriptionPayload
-}
+# type AuthPayload {
+#   token: String
+#   user: User
+# }
