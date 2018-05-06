@@ -11,6 +11,8 @@ type Mutation {
   updateUser(netid: String, firstName: String, lastName: String,
               minHour: Int, maxHour: Int, totalHours: Int): User!
   deleteUser(netid: String!): User!
+  # Login Process thru CAS
+  login(ticket: String!): User
   # signup(email: String!, password: String!, name: String!): AuthPayload
   # login(email: String!, password: String!): AuthPayload
 }

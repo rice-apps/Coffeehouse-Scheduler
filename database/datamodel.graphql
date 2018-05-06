@@ -7,3 +7,23 @@ type User {
   maxHour: Int
   totalHours: Int
 }
+
+# type Schedule {
+#   id: ID! @unique
+#   week: [Day!]!
+# }
+#
+# type Day {
+#   id: ID! @unique
+#   dayName: WeekDay
+# }
+#
+# enum WeekDay {
+#   Monday
+#   Tuesday
+#   Wednesday
+#   Thursday
+#   Friday
+#   Saturday
+#   Sunday
+# }

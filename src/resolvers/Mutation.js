@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+var request = require('request');
+var xmlParser = require('xml2js').parseString;
+var config = require('../config');
 const { APP_SECRET, getUserId } = require('../utils')
 
 // User Mutations
@@ -35,6 +38,48 @@ function deleteUser(parent, args, context, info) {
   return context.db.mutation.deleteUser({
     where: {netid: args.netid}
   }, info)
+}
+
+// Login Process
+async function login(parent, args, context, info) {
+  // 1: Validate ticket against CAS Server
+  var url = `${config.CASValidateURL}?ticket=${args.ticket}&service=${config.thisServiceURL}`;
+  return await request(url, (err, response, body) => {
+    if (err) return {};
+    // 2: Parse XML
+    return await xmlParser(body, {
+                tagNameProcessors: [stripPrefix],
+                explicitArray: false
+            }, (err, result) => {
+              if (err) return {};
+              serviceResponse = result.serviceResponse;
+              var authSucceded = serviceResponse.authenticationSuccess;
+              // 3: Check if authentication succeeded
+              if (authSucceded) {
+                // 4: Check if user authenticated exists in our DB
+                const existingUser = await context.db.query.users({
+                  { netid: authSucceded.user }
+                }, `{ id }`)
+                if (existingUser) {
+                  var token = jwt.sign({
+                    data: authSucceded,
+                    userID: existingUser.id
+                  }, config.secret)
+                  return token
+                }
+                else {
+                  const newUser = await context.db.mutation.createUser({
+                    data: { netid: authSucceded.user }
+                  }, `{ id }`)
+                  var token = jwt.sign({
+                    data: authSucceded,
+                    userID: newUser.id
+                  }, config.secret)
+                  return token
+                }
+              }
+            });
+          })
 }
 
 /*
