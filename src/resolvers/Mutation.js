@@ -47,10 +47,10 @@ async function login(parent, args, context, info) {
   return await request(url, (err, response, body) => {
     if (err) return {};
     // 2: Parse XML
-    return await xmlParser(body, {
+    return xmlParser(body, {
                 tagNameProcessors: [stripPrefix],
                 explicitArray: false
-            }, (err, result) => {
+            }, async (err, result) => {
               if (err) return {};
               serviceResponse = result.serviceResponse;
               var authSucceded = serviceResponse.authenticationSuccess;
@@ -58,7 +58,7 @@ async function login(parent, args, context, info) {
               if (authSucceded) {
                 // 4: Check if user authenticated exists in our DB
                 const existingUser = await context.db.query.users({
-                  { netid: authSucceded.user }
+                  netid: authSucceded.user
                 }, `{ id }`)
                 if (existingUser) {
                   var token = jwt.sign({

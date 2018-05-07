@@ -5,6 +5,23 @@
 # Model Types
 #
 
+type Day implements Node {
+  id: ID!
+  dayName: WEEKDAY!
+  shifts(where: ShiftWhereInput, orderBy: ShiftOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Shift!]
+}
+
+type Schedule implements Node {
+  id: ID!
+  week(where: DayWhereInput, orderBy: DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Day!]
+}
+
+type Shift implements Node {
+  id: ID!
+  availabilities(where: UserAvailabilityWhereInput, orderBy: UserAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserAvailability!]
+  scheduled(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
 type User implements Node {
   id: ID!
   netid: String!
@@ -20,7 +37,23 @@ type User implements Node {
 # Other Types
 #
 
+type AggregateDay {
+  count: Int!
+}
+
+type AggregateSchedule {
+  count: Int!
+}
+
+type AggregateShift {
+  count: Int!
+}
+
 type AggregateUser {
+  count: Int!
+}
+
+type AggregateUserAvailability {
   count: Int!
 }
 
@@ -32,6 +65,218 @@ type BatchPayload {
 }
 
 """
+A connection to a list of items.
+"""
+type DayConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [DayEdge]!
+  aggregate: AggregateDay!
+}
+
+input DayCreateInput {
+  dayName: WEEKDAY!
+  shifts: ShiftCreateManyInput
+}
+
+input DayCreateManyInput {
+  create: [DayCreateInput!]
+  connect: [DayWhereUniqueInput!]
+}
+
+"""
+An edge in a connection.
+"""
+type DayEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Day!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum DayOrderByInput {
+  id_ASC
+  id_DESC
+  dayName_ASC
+  dayName_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type DayPreviousValues {
+  id: ID!
+  dayName: WEEKDAY!
+}
+
+type DaySubscriptionPayload {
+  mutation: MutationType!
+  node: Day
+  updatedFields: [String!]
+  previousValues: DayPreviousValues
+}
+
+input DaySubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DaySubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DaySubscriptionWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [DaySubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DayWhereInput
+}
+
+input DayUpdateDataInput {
+  dayName: WEEKDAY
+  shifts: ShiftUpdateManyInput
+}
+
+input DayUpdateInput {
+  dayName: WEEKDAY
+  shifts: ShiftUpdateManyInput
+}
+
+input DayUpdateManyInput {
+  create: [DayCreateInput!]
+  connect: [DayWhereUniqueInput!]
+  disconnect: [DayWhereUniqueInput!]
+  delete: [DayWhereUniqueInput!]
+  update: [DayUpdateWithWhereUniqueNestedInput!]
+  upsert: [DayUpsertWithWhereUniqueNestedInput!]
+}
+
+input DayUpdateWithWhereUniqueNestedInput {
+  where: DayWhereUniqueInput!
+  data: DayUpdateDataInput!
+}
+
+input DayUpsertWithWhereUniqueNestedInput {
+  where: DayWhereUniqueInput!
+  update: DayUpdateDataInput!
+  create: DayCreateInput!
+}
+
+input DayWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [DayWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [DayWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [DayWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  dayName: WEEKDAY
+  """
+  All values that are not equal to given value.
+  """
+  dayName_not: WEEKDAY
+  """
+  All values that are contained in given list.
+  """
+  dayName_in: [WEEKDAY!]
+  """
+  All values that are not contained in given list.
+  """
+  dayName_not_in: [WEEKDAY!]
+  shifts_every: ShiftWhereInput
+  shifts_some: ShiftWhereInput
+  shifts_none: ShiftWhereInput
+}
+
+input DayWhereUniqueInput {
+  id: ID
+}
+
+"""
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
 """
@@ -39,11 +284,35 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createSchedule(data: ScheduleCreateInput!): Schedule!
+  createDay(data: DayCreateInput!): Day!
+  createShift(data: ShiftCreateInput!): Shift!
+  createUserAvailability(data: UserAvailabilityCreateInput!): UserAvailability!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateSchedule(data: ScheduleUpdateInput!, where: ScheduleWhereUniqueInput!): Schedule
+  updateDay(data: DayUpdateInput!, where: DayWhereUniqueInput!): Day
+  updateShift(data: ShiftUpdateInput!, where: ShiftWhereUniqueInput!): Shift
+  updateUserAvailability(data: UserAvailabilityUpdateInput!, where: UserAvailabilityWhereUniqueInput!): UserAvailability
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteSchedule(where: ScheduleWhereUniqueInput!): Schedule
+  deleteDay(where: DayWhereUniqueInput!): Day
+  deleteShift(where: ShiftWhereUniqueInput!): Shift
+  deleteUserAvailability(where: UserAvailabilityWhereUniqueInput!): UserAvailability
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertSchedule(where: ScheduleWhereUniqueInput!, create: ScheduleCreateInput!, update: ScheduleUpdateInput!): Schedule!
+  upsertDay(where: DayWhereUniqueInput!, create: DayCreateInput!, update: DayUpdateInput!): Day!
+  upsertShift(where: ShiftWhereUniqueInput!, create: ShiftCreateInput!, update: ShiftUpdateInput!): Shift!
+  upsertUserAvailability(where: UserAvailabilityWhereUniqueInput!, create: UserAvailabilityCreateInput!, update: UserAvailabilityUpdateInput!): UserAvailability!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManySchedules(data: ScheduleUpdateInput!, where: ScheduleWhereInput): BatchPayload!
+  updateManyDays(data: DayUpdateInput!, where: DayWhereInput): BatchPayload!
+  updateManyShifts(data: ShiftUpdateInput!, where: ShiftWhereInput): BatchPayload!
+  updateManyUserAvailabilities(data: UserAvailabilityUpdateInput!, where: UserAvailabilityWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManySchedules(where: ScheduleWhereInput): BatchPayload!
+  deleteManyDays(where: DayWhereInput): BatchPayload!
+  deleteManyShifts(where: ShiftWhereInput): BatchPayload!
+  deleteManyUserAvailabilities(where: UserAvailabilityWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -86,8 +355,20 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  schedules(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Schedule]!
+  days(where: DayWhereInput, orderBy: DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Day]!
+  shifts(where: ShiftWhereInput, orderBy: ShiftOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Shift]!
+  userAvailabilities(where: UserAvailabilityWhereInput, orderBy: UserAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserAvailability]!
   user(where: UserWhereUniqueInput!): User
+  schedule(where: ScheduleWhereUniqueInput!): Schedule
+  day(where: DayWhereUniqueInput!): Day
+  shift(where: ShiftWhereUniqueInput!): Shift
+  userAvailability(where: UserAvailabilityWhereUniqueInput!): UserAvailability
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  schedulesConnection(where: ScheduleWhereInput, orderBy: ScheduleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScheduleConnection!
+  daysConnection(where: DayWhereInput, orderBy: DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DayConnection!
+  shiftsConnection(where: ShiftWhereInput, orderBy: ShiftOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShiftConnection!
+  userAvailabilitiesConnection(where: UserAvailabilityWhereInput, orderBy: UserAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserAvailabilityConnection!
   """
   Fetches an object given its ID
   """
@@ -97,8 +378,607 @@ type Query {
   id: ID!): Node
 }
 
+"""
+A connection to a list of items.
+"""
+type ScheduleConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [ScheduleEdge]!
+  aggregate: AggregateSchedule!
+}
+
+input ScheduleCreateInput {
+  week: DayCreateManyInput
+}
+
+"""
+An edge in a connection.
+"""
+type ScheduleEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Schedule!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum ScheduleOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SchedulePreviousValues {
+  id: ID!
+}
+
+type ScheduleSubscriptionPayload {
+  mutation: MutationType!
+  node: Schedule
+  updatedFields: [String!]
+  previousValues: SchedulePreviousValues
+}
+
+input ScheduleSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ScheduleSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ScheduleSubscriptionWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [ScheduleSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ScheduleWhereInput
+}
+
+input ScheduleUpdateInput {
+  week: DayUpdateManyInput
+}
+
+input ScheduleWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ScheduleWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ScheduleWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [ScheduleWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  week_every: DayWhereInput
+  week_some: DayWhereInput
+  week_none: DayWhereInput
+}
+
+input ScheduleWhereUniqueInput {
+  id: ID
+}
+
+"""
+A connection to a list of items.
+"""
+type ShiftConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [ShiftEdge]!
+  aggregate: AggregateShift!
+}
+
+input ShiftCreateInput {
+  availabilities: UserAvailabilityCreateManyInput
+  scheduled: UserCreateManyInput
+}
+
+input ShiftCreateManyInput {
+  create: [ShiftCreateInput!]
+  connect: [ShiftWhereUniqueInput!]
+}
+
+"""
+An edge in a connection.
+"""
+type ShiftEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: Shift!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum ShiftOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ShiftPreviousValues {
+  id: ID!
+}
+
+type ShiftSubscriptionPayload {
+  mutation: MutationType!
+  node: Shift
+  updatedFields: [String!]
+  previousValues: ShiftPreviousValues
+}
+
+input ShiftSubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ShiftSubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ShiftSubscriptionWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [ShiftSubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ShiftWhereInput
+}
+
+input ShiftUpdateDataInput {
+  availabilities: UserAvailabilityUpdateManyInput
+  scheduled: UserUpdateManyInput
+}
+
+input ShiftUpdateInput {
+  availabilities: UserAvailabilityUpdateManyInput
+  scheduled: UserUpdateManyInput
+}
+
+input ShiftUpdateManyInput {
+  create: [ShiftCreateInput!]
+  connect: [ShiftWhereUniqueInput!]
+  disconnect: [ShiftWhereUniqueInput!]
+  delete: [ShiftWhereUniqueInput!]
+  update: [ShiftUpdateWithWhereUniqueNestedInput!]
+  upsert: [ShiftUpsertWithWhereUniqueNestedInput!]
+}
+
+input ShiftUpdateWithWhereUniqueNestedInput {
+  where: ShiftWhereUniqueInput!
+  data: ShiftUpdateDataInput!
+}
+
+input ShiftUpsertWithWhereUniqueNestedInput {
+  where: ShiftWhereUniqueInput!
+  update: ShiftUpdateDataInput!
+  create: ShiftCreateInput!
+}
+
+input ShiftWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [ShiftWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [ShiftWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [ShiftWhereInput!]
+  id: ID
+  """
+  All values that are not equal to given value.
+  """
+  id_not: ID
+  """
+  All values that are contained in given list.
+  """
+  id_in: [ID!]
+  """
+  All values that are not contained in given list.
+  """
+  id_not_in: [ID!]
+  """
+  All values less than the given value.
+  """
+  id_lt: ID
+  """
+  All values less than or equal the given value.
+  """
+  id_lte: ID
+  """
+  All values greater than the given value.
+  """
+  id_gt: ID
+  """
+  All values greater than or equal the given value.
+  """
+  id_gte: ID
+  """
+  All values containing the given string.
+  """
+  id_contains: ID
+  """
+  All values not containing the given string.
+  """
+  id_not_contains: ID
+  """
+  All values starting with the given string.
+  """
+  id_starts_with: ID
+  """
+  All values not starting with the given string.
+  """
+  id_not_starts_with: ID
+  """
+  All values ending with the given string.
+  """
+  id_ends_with: ID
+  """
+  All values not ending with the given string.
+  """
+  id_not_ends_with: ID
+  availabilities_every: UserAvailabilityWhereInput
+  availabilities_some: UserAvailabilityWhereInput
+  availabilities_none: UserAvailabilityWhereInput
+  scheduled_every: UserWhereInput
+  scheduled_some: UserWhereInput
+  scheduled_none: UserWhereInput
+}
+
+input ShiftWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  schedule(where: ScheduleSubscriptionWhereInput): ScheduleSubscriptionPayload
+  day(where: DaySubscriptionWhereInput): DaySubscriptionPayload
+  shift(where: ShiftSubscriptionWhereInput): ShiftSubscriptionPayload
+  userAvailability(where: UserAvailabilitySubscriptionWhereInput): UserAvailabilitySubscriptionPayload
+}
+
+type UserAvailability {
+  netid: String!
+  availability: Int
+}
+
+"""
+A connection to a list of items.
+"""
+type UserAvailabilityConnection {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+  """
+  A list of edges.
+  """
+  edges: [UserAvailabilityEdge]!
+  aggregate: AggregateUserAvailability!
+}
+
+input UserAvailabilityCreateInput {
+  netid: String!
+  availability: Int
+}
+
+input UserAvailabilityCreateManyInput {
+  create: [UserAvailabilityCreateInput!]
+  connect: [UserAvailabilityWhereUniqueInput!]
+}
+
+"""
+An edge in a connection.
+"""
+type UserAvailabilityEdge {
+  """
+  The item at the end of the edge.
+  """
+  node: UserAvailability!
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+}
+
+enum UserAvailabilityOrderByInput {
+  netid_ASC
+  netid_DESC
+  availability_ASC
+  availability_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserAvailabilityPreviousValues {
+  netid: String!
+  availability: Int
+}
+
+type UserAvailabilitySubscriptionPayload {
+  mutation: MutationType!
+  node: UserAvailability
+  updatedFields: [String!]
+  previousValues: UserAvailabilityPreviousValues
+}
+
+input UserAvailabilitySubscriptionWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [UserAvailabilitySubscriptionWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [UserAvailabilitySubscriptionWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [UserAvailabilitySubscriptionWhereInput!]
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserAvailabilityWhereInput
+}
+
+input UserAvailabilityUpdateDataInput {
+  netid: String
+  availability: Int
+}
+
+input UserAvailabilityUpdateInput {
+  netid: String
+  availability: Int
+}
+
+input UserAvailabilityUpdateManyInput {
+  create: [UserAvailabilityCreateInput!]
+  connect: [UserAvailabilityWhereUniqueInput!]
+  disconnect: [UserAvailabilityWhereUniqueInput!]
+  delete: [UserAvailabilityWhereUniqueInput!]
+  update: [UserAvailabilityUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserAvailabilityUpsertWithWhereUniqueNestedInput!]
+}
+
+input UserAvailabilityUpdateWithWhereUniqueNestedInput {
+  where: UserAvailabilityWhereUniqueInput!
+  data: UserAvailabilityUpdateDataInput!
+}
+
+input UserAvailabilityUpsertWithWhereUniqueNestedInput {
+  where: UserAvailabilityWhereUniqueInput!
+  update: UserAvailabilityUpdateDataInput!
+  create: UserAvailabilityCreateInput!
+}
+
+input UserAvailabilityWhereInput {
+  """
+  Logical AND on all given filters.
+  """
+  AND: [UserAvailabilityWhereInput!]
+  """
+  Logical OR on all given filters.
+  """
+  OR: [UserAvailabilityWhereInput!]
+  """
+  Logical NOT on all given filters combined by AND.
+  """
+  NOT: [UserAvailabilityWhereInput!]
+  netid: String
+  """
+  All values that are not equal to given value.
+  """
+  netid_not: String
+  """
+  All values that are contained in given list.
+  """
+  netid_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  netid_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  netid_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  netid_lte: String
+  """
+  All values greater than the given value.
+  """
+  netid_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  netid_gte: String
+  """
+  All values containing the given string.
+  """
+  netid_contains: String
+  """
+  All values not containing the given string.
+  """
+  netid_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  netid_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  netid_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  netid_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  netid_not_ends_with: String
+  availability: Int
+  """
+  All values that are not equal to given value.
+  """
+  availability_not: Int
+  """
+  All values that are contained in given list.
+  """
+  availability_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  availability_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  availability_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  availability_lte: Int
+  """
+  All values greater than the given value.
+  """
+  availability_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  availability_gte: Int
+}
+
+input UserAvailabilityWhereUniqueInput {
+  netid: String
 }
 
 """
@@ -123,6 +1003,11 @@ input UserCreateInput {
   minHour: Int
   maxHour: Int
   totalHours: Int
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 """
@@ -209,6 +1094,15 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  netid: String
+  firstName: String
+  lastName: String
+  minHour: Int
+  maxHour: Int
+  totalHours: Int
+}
+
 input UserUpdateInput {
   netid: String
   firstName: String
@@ -216,6 +1110,26 @@ input UserUpdateInput {
   minHour: Int
   maxHour: Int
   totalHours: Int
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+}
+
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -535,4 +1449,14 @@ input UserWhereInput {
 input UserWhereUniqueInput {
   id: ID
   netid: String
+}
+
+enum WEEKDAY {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
 }

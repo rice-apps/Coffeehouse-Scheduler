@@ -1,0 +1,9 @@
+enum WEEKDAY {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
+}

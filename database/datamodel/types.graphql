@@ -1,0 +1,31 @@
+type User {
+  id: ID! @unique
+  netid: String! @unique
+  firstName: String
+  lastName: String
+  minHour: Int
+  maxHour: Int
+  totalHours: Int
+}
+
+type Schedule {
+  id: ID! @unique
+  week: [Day!]!
+}
+
+type Day {
+  id: ID! @unique
+  dayName: WEEKDAY!
+  shifts: [Shift!]!
+}
+
+type Shift {
+  id: ID! @unique
+  availabilities: [UserAvailability!]!
+  scheduled: [User!]!
+}
+
+type UserAvailability {
+  netid: String! @unique
+  availability: Int
+}
