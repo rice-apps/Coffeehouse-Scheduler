@@ -3,6 +3,8 @@
 type Query {
   # Fetch all users or filter by first name, last name, or netid
   users(filter: String): [User!]
+  # Schedule queries
+  schedules(filter: Int): [Schedule!]
 }
 
 type Mutation {
@@ -13,6 +15,8 @@ type Mutation {
   deleteUser(netid: String!): User!
   # Login Process thru CAS
   login(ticket: String!): User
+  # Build Schedule
+  createSchedule(weekNo: Int!): Schedule
   # signup(email: String!, password: String!, name: String!): AuthPayload
   # login(email: String!, password: String!): AuthPayload
 }

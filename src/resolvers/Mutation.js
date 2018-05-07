@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 var request = require('request');
 var xmlParser = require('xml2js').parseString;
 var config = require('../config');
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET, DAYS_OF_WEEK, getUserId } = require('../utils')
 
 // User Mutations
 async function createUser(parent, args, context, info) {
@@ -80,6 +80,96 @@ async function login(parent, args, context, info) {
               }
             });
           })
+}
+
+// Schedule Mutations
+async function createSchedule(parent, args, context, info) {
+  // Build Week
+  const schedule = await context.db.mutation.createSchedule({
+    data: { ...args }
+  }, `{ id }`)
+  // Build Days
+  let dayObjects = []
+  for (var i in DAYS_OF_WEEK) {
+    var dayName = DAYS_OF_WEEK[i]
+    dayObjects.push(context.db.mutation.createDay({
+      data: { dayName }
+    }, `{ id dayName shifts { id } }`))
+  }
+  // Wait for everything to build
+  dayObjects = await Promise.all(dayObjects)
+  // Build Shifts in each day
+  let allShifts = []
+  for (i in dayObjects) {
+    // Shift Array for this specific day
+    let dayShifts = []
+    // M-Th: iterate through hours 7am - midnight as starttimes of shifts
+    if (i < 4) {
+      var startTime = 7;
+      var finalStartTime = 24;
+    }
+    // Friday: iterate through hours 7am - 5pm
+    else if (i == 4) {
+      var startTime = 7;
+      var finalStartTime = 17;
+    }
+    // Saturday: iterate through hours 10am - 5pm
+    else if (i == 5) {
+      var startTime = 10;
+      var finalStartTime = 17;
+    }
+    // Sunday: iterate through hours 2pm - midnight
+    else if (i == 6) {
+      var startTime = 14;
+      var finalStartTime = 24;
+    }
+    for (startTime; startTime <= finalStartTime; startTime++) {
+      // Each shift is 1 hour long
+      var endTime = startTime + 1;
+      // Create shift object
+      var shift = context.db.mutation.createShift({
+        data: { startTime, endTime }
+      }, `{ id }`);
+      // Add shift to list of shifts for day
+      dayShifts.push(shift);
+    }
+    // Add array of day's shifts to array of all shifts
+    allShifts.push(dayShifts);
+  }
+  // Wait for all shifts to Build (in a parallel batch)
+  allShifts = await Promise.all(allShifts.map((shiftArray) => Promise.all(shiftArray)));
+  // Attach each shift array to its respective day
+  let dayUpdates = [];
+  // i is integer; index of dayObjects corresponds to index of allShifts
+  for (i in dayObjects) {
+    // Get Shift Objects by Id (since createShift doesn't return actual shift objects,
+    // which the following mutation needs)
+    // dayShifts = []
+    // for (let shift in allShifts[i]) {
+    //   dayShifts.push(context.db.query.shifts({
+    //     where: { id: allShifts[i][shift]}
+    //   }))
+    // }
+    dayUpdates.push(context.db.mutation.updateDay({
+      data: {
+        shifts: { connect: allShifts[i] }
+      },
+      where: { id: dayObjects[i].id }
+    }, `{ id }`));
+  }
+  // Wait for all days to be updated with new shifts
+  dayUpdates = await Promise.all(dayUpdates)
+  console.log(dayUpdates);
+  // Add days to week
+  return context.db.mutation.updateSchedule({
+    data: {
+      week: { connect: dayUpdates }
+    },
+    where: { id: schedule.id }
+  }, info);
+  // return {
+  //   schedule
+  // }
 }
 
 /*
@@ -184,5 +274,6 @@ Inputs
 module.exports = {
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  createSchedule
 }

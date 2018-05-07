@@ -16,6 +16,21 @@ async function users(parent, args, context, info) {
 
 }
 
+async function schedules(parent, args, context, info) {
+  const where = args.filter
+    ? {
+      OR: [
+        {weekNo: args.filter}
+      ]
+    }
+    : {}
+
+  return context.db.query.schedules(
+    { where },
+    info
+  )
+}
+
 // async function feed(parent, args, context, info) {
 //   const where = args.filter
 //     ? {
@@ -52,4 +67,5 @@ async function users(parent, args, context, info) {
 
 module.exports = {
   users,
+  schedules
 }

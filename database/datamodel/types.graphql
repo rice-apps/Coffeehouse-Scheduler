@@ -10,6 +10,7 @@ type User {
 
 type Schedule {
   id: ID! @unique
+  weekNo: Int!
   week: [Day!]!
 }
 
@@ -21,6 +22,8 @@ type Day {
 
 type Shift {
   id: ID! @unique
+  startTime: Int!
+  endTime: Int!
   availabilities: [UserAvailability!]!
   scheduled: [User!]!
 }

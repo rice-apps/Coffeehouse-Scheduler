@@ -13,11 +13,14 @@ type Day implements Node {
 
 type Schedule implements Node {
   id: ID!
+  weekNo: Int!
   week(where: DayWhereInput, orderBy: DayOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Day!]
 }
 
 type Shift implements Node {
   id: ID!
+  startTime: Int!
+  endTime: Int!
   availabilities(where: UserAvailabilityWhereInput, orderBy: UserAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserAvailability!]
   scheduled(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
@@ -394,6 +397,7 @@ type ScheduleConnection {
 }
 
 input ScheduleCreateInput {
+  weekNo: Int!
   week: DayCreateManyInput
 }
 
@@ -414,6 +418,8 @@ type ScheduleEdge {
 enum ScheduleOrderByInput {
   id_ASC
   id_DESC
+  weekNo_ASC
+  weekNo_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -422,6 +428,7 @@ enum ScheduleOrderByInput {
 
 type SchedulePreviousValues {
   id: ID!
+  weekNo: Int!
 }
 
 type ScheduleSubscriptionPayload {
@@ -464,6 +471,7 @@ input ScheduleSubscriptionWhereInput {
 }
 
 input ScheduleUpdateInput {
+  weekNo: Int
   week: DayUpdateManyInput
 }
 
@@ -533,6 +541,35 @@ input ScheduleWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
+  weekNo: Int
+  """
+  All values that are not equal to given value.
+  """
+  weekNo_not: Int
+  """
+  All values that are contained in given list.
+  """
+  weekNo_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  weekNo_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  weekNo_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  weekNo_lte: Int
+  """
+  All values greater than the given value.
+  """
+  weekNo_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  weekNo_gte: Int
   week_every: DayWhereInput
   week_some: DayWhereInput
   week_none: DayWhereInput
@@ -558,6 +595,8 @@ type ShiftConnection {
 }
 
 input ShiftCreateInput {
+  startTime: Int!
+  endTime: Int!
   availabilities: UserAvailabilityCreateManyInput
   scheduled: UserCreateManyInput
 }
@@ -584,6 +623,10 @@ type ShiftEdge {
 enum ShiftOrderByInput {
   id_ASC
   id_DESC
+  startTime_ASC
+  startTime_DESC
+  endTime_ASC
+  endTime_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -592,6 +635,8 @@ enum ShiftOrderByInput {
 
 type ShiftPreviousValues {
   id: ID!
+  startTime: Int!
+  endTime: Int!
 }
 
 type ShiftSubscriptionPayload {
@@ -634,11 +679,15 @@ input ShiftSubscriptionWhereInput {
 }
 
 input ShiftUpdateDataInput {
+  startTime: Int
+  endTime: Int
   availabilities: UserAvailabilityUpdateManyInput
   scheduled: UserUpdateManyInput
 }
 
 input ShiftUpdateInput {
+  startTime: Int
+  endTime: Int
   availabilities: UserAvailabilityUpdateManyInput
   scheduled: UserUpdateManyInput
 }
@@ -729,6 +778,64 @@ input ShiftWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
+  startTime: Int
+  """
+  All values that are not equal to given value.
+  """
+  startTime_not: Int
+  """
+  All values that are contained in given list.
+  """
+  startTime_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  startTime_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  startTime_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  startTime_lte: Int
+  """
+  All values greater than the given value.
+  """
+  startTime_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  startTime_gte: Int
+  endTime: Int
+  """
+  All values that are not equal to given value.
+  """
+  endTime_not: Int
+  """
+  All values that are contained in given list.
+  """
+  endTime_in: [Int!]
+  """
+  All values that are not contained in given list.
+  """
+  endTime_not_in: [Int!]
+  """
+  All values less than the given value.
+  """
+  endTime_lt: Int
+  """
+  All values less than or equal the given value.
+  """
+  endTime_lte: Int
+  """
+  All values greater than the given value.
+  """
+  endTime_gt: Int
+  """
+  All values greater than or equal the given value.
+  """
+  endTime_gte: Int
   availabilities_every: UserAvailabilityWhereInput
   availabilities_some: UserAvailabilityWhereInput
   availabilities_none: UserAvailabilityWhereInput
