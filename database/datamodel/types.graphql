@@ -29,6 +29,9 @@ type Shift {
 }
 
 type UserAvailability {
-  netid: String! @unique
+  # netid: String! @unique
+  id: ID! @unique
+  shift: Shift!
+  user: User!
   availability: Int
 }

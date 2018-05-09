@@ -7,9 +7,11 @@ const { APP_SECRET, DAYS_OF_WEEK, getUserId } = require('../utils')
 
 // User Mutations
 async function createUser(parent, args, context, info) {
-  return context.db.mutation.createUser({
+  // Creates user in DB
+  const user = await context.db.mutation.createUser({
     data: { ...args }
   }, info)
+  // Adds user to all shifts of every schedule
 }
 
 async function updateUser(parent, args, context, info) {
@@ -126,6 +128,7 @@ async function createSchedule(parent, args, context, info) {
     for (startTime; startTime <= finalStartTime; startTime++) {
       // Each shift is 1 hour long
       var endTime = startTime + 1;
+      // Create user availabilities
       // Create shift object
       var shift = context.db.mutation.createShift({
         data: { startTime, endTime }
@@ -152,8 +155,13 @@ async function createSchedule(parent, args, context, info) {
     // }
     dayUpdates.push(context.db.mutation.updateDay({
       data: {
+        /*
+        allShifts[i] is a list of ids, which allows us to form relation between
+        Shift Objects in allShifts and the shifts field of Day Object
+        */
         shifts: { connect: allShifts[i] }
       },
+      // Only adjusting corresponding Day Object; ensured to be unique because id
       where: { id: dayObjects[i].id }
     }, `{ id }`));
   }
@@ -170,6 +178,133 @@ async function createSchedule(parent, args, context, info) {
   // return {
   //   schedule
   // }
+}
+
+// async function deleteSchedule(parent, args, context, info) {
+//   // First, get schedule
+//   let schedule = await context.db.query.schedules({
+//     where: { id: args.id }
+//   }, `{ week { id } }`);
+//   // There will only be one output, but its provided as an array so we just want
+//   // first value
+//   schedule = schedule[0];
+//   console.log(schedule);
+//   let shiftsInDay = []
+//   // Iterate through each day, get each shift's id for each day
+//   for (var idIndex in schedule.week) {
+//     shiftsInDay.push(context.db.query.days({
+//       where: { id: schedule.week[idIndex]['id'] }
+//     }, `{ shifts { id } }`));
+//   }
+//   // Execute all day queries in parallel
+//   shiftsInDay = await Promise.all(shiftsInDay);
+//   let userAvailabilitiesInShifts = [];
+//   // Iterate through each day
+//   for (var dayIndex in shiftsInDay) {
+//     console.log(dayIndex);
+//     // Iterate through each shift of each day
+//     for (var shiftIndex in shiftsInDay[dayIndex]) {
+//       console.log(shiftIndex);
+//       // Get UserAvailabilities from each shift
+//       userAvailabilitiesInShifts.push(context.db.query.shifts({
+//         where: { id: shiftsInDay[dayIndex][0].shifts[shiftIndex]['id'] }
+//       }, `{ availabilities { id } }`))
+//     }
+//   }
+//   userAvailabilitiesInShifts = await Promise.all(userAvailabilitiesInShifts);
+//   console.log(userAvailabilitiesInShifts);
+//   return;
+//   let availabilitiesToDelete = []
+//   for (dayIndex in userAvailabilitiesInShifts) {
+//     for (shiftIndex in userAvailabilitiesInShifts[dayIndex]) {
+//       for (var userAvailIndex in userAvailabilitiesInShifts[dayIndex][shiftIndex].availabilities) {
+//         availabilitiesToDelete.push(context.db.mutation.deleteUserAvailability(
+//           {where: { id: userAvailabilitiesInShifts[shiftIndex][availIndex].availabilities[userAvailIndex]["id"] } }
+//         ));
+//       }
+//     }
+//   }
+//   await Promise.all(availabilitiesToDelete);
+//   // Delete shifts
+//   let shiftsToDelete = [];
+//   for (dayIndex in shiftsInDay) {
+//     for (shiftIndex in shiftsInDay[dayIndex]) {
+//       console.log(shiftsInDay[dayIndex].shifts[shiftIndex])
+//       shiftsToDelete.push(context.db.mutation.deleteShift({
+//         where: { id: shiftsInDay[dayIndex].shifts[shiftIndex]['id'] }
+//       }));
+//     }
+//   };
+//   // Delete days
+//   let daysToDelete = [];
+//   for (dayIndex in schedule.week) {
+//     daysToDelete.push(context.db.mutation.deleteDay({
+//       where: { id: schedule.week[dayIndex]['id'] }
+//     }));
+//   }
+//   await Promise.all(shiftsToDelete);
+//   await Promise.all(daysToDelete);
+//   console.log(shiftsInDay);
+//   // Finally, delete schedule
+//   return context.db.mutation.deleteSchedule({
+//     where: { id: args.id }
+//   }, `{ id }`);
+// }
+
+async function deleteSchedule(parent, args, context, info) {
+  let schedule = await context.db.query.schedules({
+    where: { id: args.id }
+  }, `{ week { id shifts {id availabilities { id } } } }`);
+  schedule = schedule[0];
+  let toDelete = [];
+  for (var dayIndex in schedule.week) {
+    for (var shiftIndex in schedule.week[dayIndex].shifts) {
+      let shiftCollection = schedule.week[dayIndex].shifts;
+      for (var availIndex in shiftCollection[shiftIndex].availabilities) {
+        toDelete.push(context.db.mutation.deleteUserAvailability({
+          where: { id: shiftCollection[shiftIndex].availabilities[availIndex] }
+        }));
+      }
+      toDelete.push(context.db.mutation.deleteShift({
+        where: { id: shiftCollection[shiftIndex].id }
+      }));
+    }
+    toDelete.push(context.db.mutation.deleteDay({
+      where: { id: schedule.week[dayIndex].id }
+    }));
+  }
+  toDelete.push(context.db.mutation.deleteSchedule({
+    where: { id: args.id }
+  }));
+  await Promise.all(toDelete);
+  return;
+}
+
+async function updateShiftAvailability(parent, args, context, info) {
+  // Update Many UserAvailibilities
+  // 1-4 -- availability
+  let availabilityUpdates = []
+  for (let i = 1; i <= 4; i++) {
+    // Check which shift availabilities are 1, 2, 3, 4 and group them together
+    let filteredShifts = args.shiftAvailabilities
+    // Only get objects where availability == i
+    .filter((shiftAvail) => shiftAvail.availability == i)
+    // Only get the shift property of that object
+    .map((shiftObj) => shiftObj.shift);
+    console.log(filteredShifts);
+    // Create mutations based on group, and then will execute in parallel later
+    availabilityUpdates.push(
+      context.db.mutation.updateManyUserAvailabilities({
+        data: { availability: i },
+        // Only updates shifts where user matches & shift matches with filteredShifts
+        where: { user: { netid_contains: args.netid }, shift: { id_in: filteredShifts } }
+      })
+    );
+  }
+  // console.log("Here!");
+  // Execute all updates in parallel
+  await Promise.all(availabilityUpdates);
+  return "Meme"
 }
 
 /*
@@ -275,5 +410,7 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  createSchedule
+  createSchedule,
+  deleteSchedule,
+  updateShiftAvailability
 }

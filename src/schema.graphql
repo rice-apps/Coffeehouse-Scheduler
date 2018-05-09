@@ -1,10 +1,13 @@
 # import User from "./generated/prisma.graphql"
+# import WEEKDAY from "../database/datamodel/enums.graphql"
 
 type Query {
   # Fetch all users or filter by first name, last name, or netid
   users(filter: String): [User!]
   # Schedule queries
   schedules(filter: Int): [Schedule!]
+  # Testing
+  shifts(filter: String): [Shift!]
 }
 
 type Mutation {
@@ -17,8 +20,18 @@ type Mutation {
   login(ticket: String!): User
   # Build Schedule
   createSchedule(weekNo: Int!): Schedule
+  # Delete Schedule
+  deleteSchedule(id: ID!): Schedule
+  # Add availability for shift
+  updateShiftAvailability(netid: String, shiftAvailabilities: [shiftAvail!]!): String
+  # updateShiftScheduled(shiftId: ID!, user: User!, scheduled: Boolean): User!
   # signup(email: String!, password: String!, name: String!): AuthPayload
   # login(email: String!, password: String!): AuthPayload
+}
+
+input shiftAvail {
+  shift: ID!
+  availability: Int!
 }
 
 # type AuthPayload {

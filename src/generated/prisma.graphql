@@ -35,6 +35,13 @@ type User implements Node {
   totalHours: Int
 }
 
+type UserAvailability implements Node {
+  id: ID!
+  shift(where: ShiftWhereInput): Shift!
+  user(where: UserWhereInput): User!
+  availability: Int
+}
+
 
 #
 # Other Types
@@ -597,13 +604,24 @@ type ShiftConnection {
 input ShiftCreateInput {
   startTime: Int!
   endTime: Int!
-  availabilities: UserAvailabilityCreateManyInput
+  availabilities: UserAvailabilityCreateManyWithoutShiftInput
   scheduled: UserCreateManyInput
 }
 
 input ShiftCreateManyInput {
   create: [ShiftCreateInput!]
   connect: [ShiftWhereUniqueInput!]
+}
+
+input ShiftCreateOneWithoutAvailabilitiesInput {
+  create: ShiftCreateWithoutAvailabilitiesInput
+  connect: ShiftWhereUniqueInput
+}
+
+input ShiftCreateWithoutAvailabilitiesInput {
+  startTime: Int!
+  endTime: Int!
+  scheduled: UserCreateManyInput
 }
 
 """
@@ -681,14 +699,14 @@ input ShiftSubscriptionWhereInput {
 input ShiftUpdateDataInput {
   startTime: Int
   endTime: Int
-  availabilities: UserAvailabilityUpdateManyInput
+  availabilities: UserAvailabilityUpdateManyWithoutShiftInput
   scheduled: UserUpdateManyInput
 }
 
 input ShiftUpdateInput {
   startTime: Int
   endTime: Int
-  availabilities: UserAvailabilityUpdateManyInput
+  availabilities: UserAvailabilityUpdateManyWithoutShiftInput
   scheduled: UserUpdateManyInput
 }
 
@@ -701,9 +719,28 @@ input ShiftUpdateManyInput {
   upsert: [ShiftUpsertWithWhereUniqueNestedInput!]
 }
 
+input ShiftUpdateOneWithoutAvailabilitiesInput {
+  create: ShiftCreateWithoutAvailabilitiesInput
+  connect: ShiftWhereUniqueInput
+  delete: Boolean
+  update: ShiftUpdateWithoutAvailabilitiesDataInput
+  upsert: ShiftUpsertWithoutAvailabilitiesInput
+}
+
+input ShiftUpdateWithoutAvailabilitiesDataInput {
+  startTime: Int
+  endTime: Int
+  scheduled: UserUpdateManyInput
+}
+
 input ShiftUpdateWithWhereUniqueNestedInput {
   where: ShiftWhereUniqueInput!
   data: ShiftUpdateDataInput!
+}
+
+input ShiftUpsertWithoutAvailabilitiesInput {
+  update: ShiftUpdateWithoutAvailabilitiesDataInput!
+  create: ShiftCreateWithoutAvailabilitiesInput!
 }
 
 input ShiftUpsertWithWhereUniqueNestedInput {
@@ -856,11 +893,6 @@ type Subscription {
   userAvailability(where: UserAvailabilitySubscriptionWhereInput): UserAvailabilitySubscriptionPayload
 }
 
-type UserAvailability {
-  netid: String!
-  availability: Int
-}
-
 """
 A connection to a list of items.
 """
@@ -877,13 +909,19 @@ type UserAvailabilityConnection {
 }
 
 input UserAvailabilityCreateInput {
-  netid: String!
   availability: Int
+  shift: ShiftCreateOneWithoutAvailabilitiesInput!
+  user: UserCreateOneInput!
 }
 
-input UserAvailabilityCreateManyInput {
-  create: [UserAvailabilityCreateInput!]
+input UserAvailabilityCreateManyWithoutShiftInput {
+  create: [UserAvailabilityCreateWithoutShiftInput!]
   connect: [UserAvailabilityWhereUniqueInput!]
+}
+
+input UserAvailabilityCreateWithoutShiftInput {
+  availability: Int
+  user: UserCreateOneInput!
 }
 
 """
@@ -901,12 +939,10 @@ type UserAvailabilityEdge {
 }
 
 enum UserAvailabilityOrderByInput {
-  netid_ASC
-  netid_DESC
-  availability_ASC
-  availability_DESC
   id_ASC
   id_DESC
+  availability_ASC
+  availability_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -914,7 +950,7 @@ enum UserAvailabilityOrderByInput {
 }
 
 type UserAvailabilityPreviousValues {
-  netid: String!
+  id: ID!
   availability: Int
 }
 
@@ -957,34 +993,35 @@ input UserAvailabilitySubscriptionWhereInput {
   node: UserAvailabilityWhereInput
 }
 
-input UserAvailabilityUpdateDataInput {
-  netid: String
-  availability: Int
-}
-
 input UserAvailabilityUpdateInput {
-  netid: String
   availability: Int
+  shift: ShiftUpdateOneWithoutAvailabilitiesInput
+  user: UserUpdateOneInput
 }
 
-input UserAvailabilityUpdateManyInput {
-  create: [UserAvailabilityCreateInput!]
+input UserAvailabilityUpdateManyWithoutShiftInput {
+  create: [UserAvailabilityCreateWithoutShiftInput!]
   connect: [UserAvailabilityWhereUniqueInput!]
   disconnect: [UserAvailabilityWhereUniqueInput!]
   delete: [UserAvailabilityWhereUniqueInput!]
-  update: [UserAvailabilityUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserAvailabilityUpsertWithWhereUniqueNestedInput!]
+  update: [UserAvailabilityUpdateWithWhereUniqueWithoutShiftInput!]
+  upsert: [UserAvailabilityUpsertWithWhereUniqueWithoutShiftInput!]
 }
 
-input UserAvailabilityUpdateWithWhereUniqueNestedInput {
-  where: UserAvailabilityWhereUniqueInput!
-  data: UserAvailabilityUpdateDataInput!
+input UserAvailabilityUpdateWithoutShiftDataInput {
+  availability: Int
+  user: UserUpdateOneInput
 }
 
-input UserAvailabilityUpsertWithWhereUniqueNestedInput {
+input UserAvailabilityUpdateWithWhereUniqueWithoutShiftInput {
   where: UserAvailabilityWhereUniqueInput!
-  update: UserAvailabilityUpdateDataInput!
-  create: UserAvailabilityCreateInput!
+  data: UserAvailabilityUpdateWithoutShiftDataInput!
+}
+
+input UserAvailabilityUpsertWithWhereUniqueWithoutShiftInput {
+  where: UserAvailabilityWhereUniqueInput!
+  update: UserAvailabilityUpdateWithoutShiftDataInput!
+  create: UserAvailabilityCreateWithoutShiftInput!
 }
 
 input UserAvailabilityWhereInput {
@@ -1000,59 +1037,59 @@ input UserAvailabilityWhereInput {
   Logical NOT on all given filters combined by AND.
   """
   NOT: [UserAvailabilityWhereInput!]
-  netid: String
+  id: ID
   """
   All values that are not equal to given value.
   """
-  netid_not: String
+  id_not: ID
   """
   All values that are contained in given list.
   """
-  netid_in: [String!]
+  id_in: [ID!]
   """
   All values that are not contained in given list.
   """
-  netid_not_in: [String!]
+  id_not_in: [ID!]
   """
   All values less than the given value.
   """
-  netid_lt: String
+  id_lt: ID
   """
   All values less than or equal the given value.
   """
-  netid_lte: String
+  id_lte: ID
   """
   All values greater than the given value.
   """
-  netid_gt: String
+  id_gt: ID
   """
   All values greater than or equal the given value.
   """
-  netid_gte: String
+  id_gte: ID
   """
   All values containing the given string.
   """
-  netid_contains: String
+  id_contains: ID
   """
   All values not containing the given string.
   """
-  netid_not_contains: String
+  id_not_contains: ID
   """
   All values starting with the given string.
   """
-  netid_starts_with: String
+  id_starts_with: ID
   """
   All values not starting with the given string.
   """
-  netid_not_starts_with: String
+  id_not_starts_with: ID
   """
   All values ending with the given string.
   """
-  netid_ends_with: String
+  id_ends_with: ID
   """
   All values not ending with the given string.
   """
-  netid_not_ends_with: String
+  id_not_ends_with: ID
   availability: Int
   """
   All values that are not equal to given value.
@@ -1082,10 +1119,12 @@ input UserAvailabilityWhereInput {
   All values greater than or equal the given value.
   """
   availability_gte: Int
+  shift: ShiftWhereInput
+  user: UserWhereInput
 }
 
 input UserAvailabilityWhereUniqueInput {
-  netid: String
+  id: ID
 }
 
 """
@@ -1115,6 +1154,11 @@ input UserCreateInput {
 input UserCreateManyInput {
   create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 """
@@ -1228,9 +1272,22 @@ input UserUpdateManyInput {
   upsert: [UserUpsertWithWhereUniqueNestedInput!]
 }
 
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
 input UserUpdateWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   data: UserUpdateDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithWhereUniqueNestedInput {
