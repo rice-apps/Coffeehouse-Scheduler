@@ -180,103 +180,45 @@ async function createSchedule(parent, args, context, info) {
   // }
 }
 
-// async function deleteSchedule(parent, args, context, info) {
-//   // First, get schedule
-//   let schedule = await context.db.query.schedules({
-//     where: { id: args.id }
-//   }, `{ week { id } }`);
-//   // There will only be one output, but its provided as an array so we just want
-//   // first value
-//   schedule = schedule[0];
-//   console.log(schedule);
-//   let shiftsInDay = []
-//   // Iterate through each day, get each shift's id for each day
-//   for (var idIndex in schedule.week) {
-//     shiftsInDay.push(context.db.query.days({
-//       where: { id: schedule.week[idIndex]['id'] }
-//     }, `{ shifts { id } }`));
-//   }
-//   // Execute all day queries in parallel
-//   shiftsInDay = await Promise.all(shiftsInDay);
-//   let userAvailabilitiesInShifts = [];
-//   // Iterate through each day
-//   for (var dayIndex in shiftsInDay) {
-//     console.log(dayIndex);
-//     // Iterate through each shift of each day
-//     for (var shiftIndex in shiftsInDay[dayIndex]) {
-//       console.log(shiftIndex);
-//       // Get UserAvailabilities from each shift
-//       userAvailabilitiesInShifts.push(context.db.query.shifts({
-//         where: { id: shiftsInDay[dayIndex][0].shifts[shiftIndex]['id'] }
-//       }, `{ availabilities { id } }`))
-//     }
-//   }
-//   userAvailabilitiesInShifts = await Promise.all(userAvailabilitiesInShifts);
-//   console.log(userAvailabilitiesInShifts);
-//   return;
-//   let availabilitiesToDelete = []
-//   for (dayIndex in userAvailabilitiesInShifts) {
-//     for (shiftIndex in userAvailabilitiesInShifts[dayIndex]) {
-//       for (var userAvailIndex in userAvailabilitiesInShifts[dayIndex][shiftIndex].availabilities) {
-//         availabilitiesToDelete.push(context.db.mutation.deleteUserAvailability(
-//           {where: { id: userAvailabilitiesInShifts[shiftIndex][availIndex].availabilities[userAvailIndex]["id"] } }
-//         ));
-//       }
-//     }
-//   }
-//   await Promise.all(availabilitiesToDelete);
-//   // Delete shifts
-//   let shiftsToDelete = [];
-//   for (dayIndex in shiftsInDay) {
-//     for (shiftIndex in shiftsInDay[dayIndex]) {
-//       console.log(shiftsInDay[dayIndex].shifts[shiftIndex])
-//       shiftsToDelete.push(context.db.mutation.deleteShift({
-//         where: { id: shiftsInDay[dayIndex].shifts[shiftIndex]['id'] }
-//       }));
-//     }
-//   };
-//   // Delete days
-//   let daysToDelete = [];
-//   for (dayIndex in schedule.week) {
-//     daysToDelete.push(context.db.mutation.deleteDay({
-//       where: { id: schedule.week[dayIndex]['id'] }
-//     }));
-//   }
-//   await Promise.all(shiftsToDelete);
-//   await Promise.all(daysToDelete);
-//   console.log(shiftsInDay);
-//   // Finally, delete schedule
-//   return context.db.mutation.deleteSchedule({
-//     where: { id: args.id }
-//   }, `{ id }`);
-// }
-
 async function deleteSchedule(parent, args, context, info) {
+  // Get requested schedule
   let schedule = await context.db.query.schedules({
     where: { id: args.id }
   }, `{ week { id shifts {id availabilities { id } } } }`);
+  // Comes as an array although it will always just be a unique object
   schedule = schedule[0];
+  // We place all our requests in here so that they execute in parallel
   let toDelete = [];
+  // Iterate thru each day of week
   for (var dayIndex in schedule.week) {
+    // Iterate thru each shift of each day of week
     for (var shiftIndex in schedule.week[dayIndex].shifts) {
+      // Makes the next for loop a little more readable
       let shiftCollection = schedule.week[dayIndex].shifts;
+      // Iterate thru each userAvailability object in each shift in each day
       for (var availIndex in shiftCollection[shiftIndex].availabilities) {
+        // Makes request to delete userAvailability object
         toDelete.push(context.db.mutation.deleteUserAvailability({
           where: { id: shiftCollection[shiftIndex].availabilities[availIndex] }
         }));
       }
+      // Makes request to delete shift object once it has served its purpose
       toDelete.push(context.db.mutation.deleteShift({
         where: { id: shiftCollection[shiftIndex].id }
       }));
     }
+    // Makes request to delete day object once it has served its purpose
     toDelete.push(context.db.mutation.deleteDay({
       where: { id: schedule.week[dayIndex].id }
     }));
   }
+  // Makes request to delete schedule object once everything is done
   toDelete.push(context.db.mutation.deleteSchedule({
     where: { id: args.id }
   }));
+  // Wait for everything to finish
   await Promise.all(toDelete);
+  // Done!
   return;
 }
 
