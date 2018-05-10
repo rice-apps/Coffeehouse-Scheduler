@@ -172,21 +172,41 @@ async function createSchedule(parent, args, context, info) {
   allShifts = await Promise.all(allShifts.map((shiftArray) => Promise.all(shiftArray)));
   // Create user availabilities
   console.log(allShifts);
+  // Execute all tasks in parallel by using async to map thru each shift of each day
   allShifts.map(async (shiftArray) => shiftArray.map(async (shift) => {
     for (let user of users) {
-      console.log("Here");
-      console.log(user);
       await context.db.mutation.updateShift({
+        /*
+        This is tricky. Let's walkthru it step by step.
+        1) data: represents data we want to UPDATE
+        2) availabilities: this is what aspect of updateShift we want to change
+        3) create: this is the command we need in order to CREATE a new element
+                   in the array. Command can be found in generated file; in the
+                   UserAvailabilityUpdateManyWithoutShiftInput input.
+        4) To create a UserAvailability object, we need to turn to the input of
+           UserAvailabilityCreateWithoutShiftInput, which specifies that the
+           properties of 'user' and 'availability' must be filled (altho availability
+           is optional). So we fill both fields out
+        5) Inside the user property, we need to create a relation between the User
+           object and this UserAvailability object. Thus, we use 'connect', and
+           only need to specify the id (as it is a unique property for each user).
+        6) Finally, since updateShift takes two arguments, we need to do the other
+           one, which is 'where'. This just allows us to specify which exact
+           shift object needs to be updated. In this case, we just specify the
+           id to be shift.id (obtained by map)
+        */
         data: { availabilities: {
           create: {
             user: { connect: { id: user.id } },
             availability: 0
           }
         } },
+        // Get current shift
         where: { id: shift.id }
       })
     }
   }));
+  // No Promise.all needed because we awaited in previous command
   // Attach each shift array to its respective day
   let dayUpdates = [];
   // i is integer; index of dayObjects corresponds to index of allShifts
