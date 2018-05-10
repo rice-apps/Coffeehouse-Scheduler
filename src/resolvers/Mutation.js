@@ -112,6 +112,10 @@ async function login(parent, args, context, info) {
 
 // Schedule Mutations
 async function createSchedule(parent, args, context, info) {
+  // Get all current users
+  const users = await context.db.query.users({
+    where: {}
+  }, `{ id }`);
   // Build Week
   const schedule = await context.db.mutation.createSchedule({
     data: { ...args }
@@ -154,7 +158,6 @@ async function createSchedule(parent, args, context, info) {
     for (startTime; startTime <= finalStartTime; startTime++) {
       // Each shift is 1 hour long
       var endTime = startTime + 1;
-      // Create user availabilities
       // Create shift object
       var shift = context.db.mutation.createShift({
         data: { startTime, endTime }
@@ -167,6 +170,23 @@ async function createSchedule(parent, args, context, info) {
   }
   // Wait for all shifts to Build (in a parallel batch)
   allShifts = await Promise.all(allShifts.map((shiftArray) => Promise.all(shiftArray)));
+  // Create user availabilities
+  console.log(allShifts);
+  allShifts.map(async (shiftArray) => shiftArray.map(async (shift) => {
+    for (let user of users) {
+      console.log("Here");
+      console.log(user);
+      await context.db.mutation.updateShift({
+        data: { availabilities: {
+          create: {
+            user: { connect: { id: user.id } },
+            availability: 0
+          }
+        } },
+        where: { id: shift.id }
+      })
+    }
+  }));
   // Attach each shift array to its respective day
   let dayUpdates = [];
   // i is integer; index of dayObjects corresponds to index of allShifts
