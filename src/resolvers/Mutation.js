@@ -224,13 +224,14 @@ async function addUserToSchedules(parent, args, context, info) {
   for (var currentSchedule of schedules) {
     // Iterate thru each day of schedule
     for (var day of currentSchedule.week) {
-      // Iterate thru each shift of day
-      for (var shift of day.shifts) {
-        // Check if one exists
+      // Map thru each shift asynchronously
+      // WHY: This makes the process much faster since the await statements execute in parallel
+      day.shifts.map(async (shift) => {
+        // Find out whether user availability object already created for this user in this shift
         const existingAvailability = await context.db.query.userAvailabilities({
           where: { user: { id: User.id }, shift: { id: shift.id } }
         }, `{ id }`);
-        console.log(existingAvailability);
+        // Above will return array of 1 object, so we just need 0th element
         existingAvailability[0] ?
         // If it exists
         console.log("Already Exists!") :
@@ -243,10 +244,10 @@ async function addUserToSchedules(parent, args, context, info) {
             availability: 0
           }
         }, `{ id }`));
-      }
+      });
     }
   }
-  // Executed all in parallel
+  // Executed remaining statements in parallel
   await Promise.all(requests);
   return User;
 }
