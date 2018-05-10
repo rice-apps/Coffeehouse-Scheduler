@@ -19,17 +19,15 @@ async function createUser(parent, args, context, info) {
     where: {}
   }, `{ id week { id shifts { id } } }`);
   // Iterate thru each schedule
-  for (var schedIndex in schedules) {
-    let currentSchedule = schedules[schedIndex];
+  for (var currentSchedule of schedules) {
     // Iterate thru each day of schedule
-    for (var dayIndex in currentSchedule.week) {
+    for (var day of currentSchedule.week) {
       // Iterate thru each shift of day
-      for (var shiftIndex in currentSchedule.week[dayIndex].shifts) {
-        let currentShiftId = currentSchedule.week[dayIndex].shifts[shiftIndex].id
+      for (var shift of day.shifts) {
         // Create User Availability Variable
         requests.push(context.db.mutation.createUserAvailability({
           data: {
-                  shift: { connect: { id: currentShiftId } },
+                  shift: { connect: { id: shift.id } },
                   user: { connect: { id: User.id } },
                   availability: 0
                 }
