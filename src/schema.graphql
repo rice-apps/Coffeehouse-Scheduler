@@ -22,7 +22,7 @@ type Mutation {
   createSchedule(weekNo: Int!): Schedule
   # Delete Schedule
   deleteSchedule(id: ID!): Schedule
-  # Add availability for shift
+  # Update multiple availabilities for user
   updateShiftAvailability(netid: String, shiftAvailabilities: [shiftAvail!]!): String
   # updateShiftScheduled(shiftId: ID!, user: User!, scheduled: Boolean): User!
   # signup(email: String!, password: String!, name: String!): AuthPayload

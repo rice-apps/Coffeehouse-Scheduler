@@ -7,11 +7,39 @@ const { APP_SECRET, DAYS_OF_WEEK, getUserId } = require('../utils')
 
 // User Mutations
 async function createUser(parent, args, context, info) {
-  // Creates user in DB
-  const user = await context.db.mutation.createUser({
+  // Creates user in DB (must be capitalized bc of how its returned)
+  const User = await context.db.mutation.createUser({
     data: { ...args }
-  }, info)
+  }, `{ id netid firstName lastName }`);
   // Adds user to all shifts of every schedule
+  // Where we will store all our requests (to execute at end)
+  let requests = [];
+  // Get all schedules
+  const schedules = await context.db.query.schedules({
+    where: {}
+  }, `{ id week { id shifts { id } } }`);
+  // Iterate thru each schedule
+  for (var schedIndex in schedules) {
+    let currentSchedule = schedules[schedIndex];
+    // Iterate thru each day of schedule
+    for (var dayIndex in currentSchedule.week) {
+      // Iterate thru each shift of day
+      for (var shiftIndex in currentSchedule.week[dayIndex].shifts) {
+        let currentShiftId = currentSchedule.week[dayIndex].shifts[shiftIndex].id
+        // Create User Availability Variable
+        requests.push(context.db.mutation.createUserAvailability({
+          data: {
+                  shift: { connect: { id: currentShiftId } },
+                  user: { connect: { id: User.id } },
+                  availability: 0
+                }
+        }, `{ id }`));
+      }
+    }
+  }
+  // Executed all in parallel
+  await Promise.all(requests);
+  return User;
 }
 
 async function updateUser(parent, args, context, info) {
@@ -192,14 +220,16 @@ async function deleteSchedule(parent, args, context, info) {
   // Iterate thru each day of week
   for (var dayIndex in schedule.week) {
     // Iterate thru each shift of each day of week
+    // CHANGE TO FOR... OF LOOP
     for (var shiftIndex in schedule.week[dayIndex].shifts) {
       // Makes the next for loop a little more readable
       let shiftCollection = schedule.week[dayIndex].shifts;
       // Iterate thru each userAvailability object in each shift in each day
+      // CHANGE TO FOR... OF LOOP
       for (var availIndex in shiftCollection[shiftIndex].availabilities) {
         // Makes request to delete userAvailability object
         toDelete.push(context.db.mutation.deleteUserAvailability({
-          where: { id: shiftCollection[shiftIndex].availabilities[availIndex] }
+          where: { id: shiftCollection[shiftIndex].availabilities[availIndex].id }
         }));
       }
       // Makes request to delete shift object once it has served its purpose
