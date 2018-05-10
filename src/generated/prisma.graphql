@@ -146,10 +146,6 @@ input DaySubscriptionWhereInput {
   """
   OR: [DaySubscriptionWhereInput!]
   """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [DaySubscriptionWhereInput!]
-  """
   The subscription event gets dispatched when it's listed in mutation_in
   """
   mutation_in: [MutationType!]
@@ -207,10 +203,6 @@ input DayWhereInput {
   Logical OR on all given filters.
   """
   OR: [DayWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [DayWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -455,10 +447,6 @@ input ScheduleSubscriptionWhereInput {
   """
   OR: [ScheduleSubscriptionWhereInput!]
   """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [ScheduleSubscriptionWhereInput!]
-  """
   The subscription event gets dispatched when it's listed in mutation_in
   """
   mutation_in: [MutationType!]
@@ -491,10 +479,6 @@ input ScheduleWhereInput {
   Logical OR on all given filters.
   """
   OR: [ScheduleWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [ScheduleWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -674,10 +658,6 @@ input ShiftSubscriptionWhereInput {
   """
   OR: [ShiftSubscriptionWhereInput!]
   """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [ShiftSubscriptionWhereInput!]
-  """
   The subscription event gets dispatched when it's listed in mutation_in
   """
   mutation_in: [MutationType!]
@@ -758,10 +738,6 @@ input ShiftWhereInput {
   Logical OR on all given filters.
   """
   OR: [ShiftWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [ShiftWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -971,10 +947,6 @@ input UserAvailabilitySubscriptionWhereInput {
   """
   OR: [UserAvailabilitySubscriptionWhereInput!]
   """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [UserAvailabilitySubscriptionWhereInput!]
-  """
   The subscription event gets dispatched when it's listed in mutation_in
   """
   mutation_in: [MutationType!]
@@ -1033,10 +1005,6 @@ input UserAvailabilityWhereInput {
   Logical OR on all given filters.
   """
   OR: [UserAvailabilityWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [UserAvailabilityWhereInput!]
   id: ID
   """
   All values that are not equal to given value.
@@ -1223,10 +1191,6 @@ input UserSubscriptionWhereInput {
   """
   OR: [UserSubscriptionWhereInput!]
   """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [UserSubscriptionWhereInput!]
-  """
   The subscription event gets dispatched when it's listed in mutation_in
   """
   mutation_in: [MutationType!]
@@ -1305,10 +1269,6 @@ input UserWhereInput {
   Logical OR on all given filters.
   """
   OR: [UserWhereInput!]
-  """
-  Logical NOT on all given filters combined by AND.
-  """
-  NOT: [UserWhereInput!]
   id: ID
   """
   All values that are not equal to given value.

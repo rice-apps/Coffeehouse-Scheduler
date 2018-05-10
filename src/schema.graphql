@@ -20,10 +20,12 @@ type Mutation {
   login(ticket: String!): User
   # Build Schedule
   createSchedule(weekNo: Int!): Schedule
+  # Add Existing User to Schedules
+  addUserToSchedules(netid: String!): User
   # Delete Schedule
   deleteSchedule(id: ID!): Schedule
   # Update multiple availabilities for user
-  updateShiftAvailability(netid: String, shiftAvailabilities: [shiftAvail!]!): String
+  updateShiftAvailabilities(netid: String, shiftAvailabilities: [shiftAvail!]!): String
   # updateShiftScheduled(shiftId: ID!, user: User!, scheduled: Boolean): User!
   # signup(email: String!, password: String!, name: String!): AuthPayload
   # login(email: String!, password: String!): AuthPayload

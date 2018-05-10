@@ -208,6 +208,49 @@ async function createSchedule(parent, args, context, info) {
   // }
 }
 
+async function addUserToSchedules(parent, args, context, info) {
+  // Find user in DB
+  let User = await context.db.query.users({
+    where: { netid_contains: args.netid }
+  }, `{ id }`);
+  // Should only be one value
+  User = User[0];
+  // Get all schedules
+  const schedules = await context.db.query.schedules({
+    where: {}
+  }, `{ id week { id shifts { id } } }`);
+  let requests = [];
+  // Iterate thru each schedule
+  for (var currentSchedule of schedules) {
+    // Iterate thru each day of schedule
+    for (var day of currentSchedule.week) {
+      // Iterate thru each shift of day
+      for (var shift of day.shifts) {
+        // Check if one exists
+        const existingAvailability = await context.db.query.userAvailabilities({
+          where: { user: { id: User.id }, shift: { id: shift.id } }
+        }, `{ id }`);
+        console.log(existingAvailability);
+        existingAvailability[0] ?
+        // If it exists
+        console.log("Already Exists!") :
+        // If not
+        // Create User Availability Variable
+        requests.push(context.db.mutation.createUserAvailability({
+          data: {
+            shift: { connect: { id: shift.id } },
+            user: { connect: { id: User.id } },
+            availability: 0
+          }
+        }, `{ id }`));
+      }
+    }
+  }
+  // Executed all in parallel
+  await Promise.all(requests);
+  return User;
+}
+
 async function deleteSchedule(parent, args, context, info) {
   // Get requested schedule
   let schedule = await context.db.query.schedules({
@@ -257,7 +300,7 @@ async function deleteSchedule(parent, args, context, info) {
   return;
 }
 
-async function updateShiftAvailability(parent, args, context, info) {
+async function updateShiftAvailabilities(parent, args, context, info) {
   // Update Many UserAvailibilities
   // 1-4 -- availability
   let availabilityUpdates = []
@@ -387,7 +430,8 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  addUserToSchedules,
   createSchedule,
   deleteSchedule,
-  updateShiftAvailability
+  updateShiftAvailabilities
 }
