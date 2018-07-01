@@ -3,7 +3,7 @@ type User {
   netid: String! @unique
   firstName: String
   lastName: String
-  minHour: Int
+  idealHour: Int
   maxHour: Int
   totalHours: Int
   role: ROLE! @default(value: "Employee")
