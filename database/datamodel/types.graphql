@@ -6,6 +6,7 @@ type User {
   minHour: Int
   maxHour: Int
   totalHours: Int
+  role: ROLE! @default(value: "Employee")
   availabilities: [UserAvailability!]! @relation(name: "UserAvailabilities", onDelete: CASCADE)
   scheduled: [Shift!]! @relation(name: "UsersScheduled")
 }

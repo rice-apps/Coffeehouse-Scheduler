@@ -12,3 +12,8 @@ enum TIMEOFDAY {
   AM
   PM
 }
+
+enum ROLE {
+  Employee
+  Admin
+}
