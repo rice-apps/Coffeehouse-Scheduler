@@ -47,22 +47,27 @@ async function updateUser(parent, args, context, info) {
     throw new Error('No such user found')
   }
 
-  // const updatedProperties = {}
-
   // Iterate through args, set updatedProperties to updated values
-  for (var arg in args.keys) {
-    // updatedProperties[arg] = args[arg]
+  Object.keys(args).map((arg) => {
+    // Get the new arg value by key
     let argVal = args[arg]
+    // Replace property in user variable
     user = {...user, [arg]: argVal}
-  }
+  });
 
-  //
+  // Destructuring to separate id field, which we need for 'where'
+  let {id, ...updatedUser} = user;
+
+  //Updates user object with new properties
   return context.db.mutation.updateUser({
-    data: {...user}
+    data: {...updatedUser},
+    where: { id }
   }, info)
 }
 
-function deleteUser(parent, args, context, info) {
+async function deleteUser(parent, args, context, info) {
+  // Prisma has cascading delete system, so we just delete user & prisma handles
+  // deletion of connected user availabilities
   return context.db.mutation.deleteUser({
     where: {netid: args.netid}
   }, info)
@@ -291,52 +296,9 @@ async function addUserToSchedules(parent, args, context, info) {
 }
 
 async function deleteSchedule(parent, args, context, info) {
-  // Get requested schedule
-  let schedule = await context.db.query.schedules({
+  return context.db.mutation.deleteSchedule({
     where: { id: args.id }
-  }, `{ week { id shifts {id availabilities { id } } } }`);
-  // Comes as an array although it will always just be a unique object
-  schedule = schedule[0];
-  // We place all our shift, day, schedule delete requests in here so that they execute in parallel
-  let toDelete = [];
-  // Iterate thru each day of week
-  for (var day of schedule.week) {
-    // Store shift ids here so you can reference them in another for loop easily
-    let shiftIds = [];
-    // Store userAvailability delete actions here so that they can be awaited
-    let availToDelete = [];
-    // Iterate thru each shift object of each day of week
-    for (var shift of day.shifts) {
-      shiftIds.push(shift.id);
-      // Iterate thru each userAvailability object in each shift in each day
-      for (var availability of shift.availabilities) {
-        // Makes request to delete userAvailability object
-        availToDelete.push(context.db.mutation.deleteUserAvailability({
-          where: { id: availability.id }
-        }));
-      }
-    }
-    // Wait for all userAvailability objects to be deleted so that errors are not raised
-    await Promise.all(availToDelete);
-    for (let shiftId of shiftIds) {
-      // Makes request to delete shiftIds once they have all served its purpose
-      toDelete.push(context.db.mutation.deleteShift({
-        where: { id: shiftId }
-      }));
-    }
-    // Makes request to delete day object once it has served its purpose
-    toDelete.push(context.db.mutation.deleteDay({
-      where: { id: day.id }
-    }));
-  }
-  // Makes request to delete schedule object once everything is done
-  toDelete.push(context.db.mutation.deleteSchedule({
-    where: { id: args.id }
-  }));
-  // Wait for everything to finish
-  await Promise.all(toDelete);
-  // Done!
-  return;
+  });
 }
 
 async function updateShiftAvailabilities(parent, args, context, info) {

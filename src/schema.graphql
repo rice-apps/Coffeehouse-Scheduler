@@ -8,13 +8,14 @@ type Query {
   schedules(filter: Int): [Schedule!]
   # Testing
   shifts(filter: String): [Shift!]
+  availabilities(filter: String): [UserAvailability!]
 }
 
 type Mutation {
   # User mutations
   createUser(netid: String!): User!
   updateUser(netid: String, firstName: String, lastName: String,
-              minHour: Int, maxHour: Int, totalHours: Int): User!
+              minHour: Int, maxHour: Int, totalHours: Int): User
   deleteUser(netid: String!): User!
   # Login Process thru CAS
   login(ticket: String!): User

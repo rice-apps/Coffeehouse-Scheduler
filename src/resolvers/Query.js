@@ -38,6 +38,13 @@ async function shifts(parent, args, context, info) {
   )
 }
 
+async function availabilities(parent, args, context, info) {
+  return context.db.query.userAvailabilities(
+    { where: { id_contains: args.filter } },
+    info
+  )
+}
+
 // async function feed(parent, args, context, info) {
 //   const where = args.filter
 //     ? {
@@ -75,5 +82,6 @@ async function shifts(parent, args, context, info) {
 module.exports = {
   users,
   schedules,
-  shifts
+  shifts,
+  availabilities
 }

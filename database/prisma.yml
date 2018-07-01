@@ -18,9 +18,9 @@ secret: itsCHAUSbiatches
 # cluster: public-flameloon-112/prisma-us1
 
 # Real cluster US
-# cluster: public-ironfinger-896/prisma-us1
+cluster: public-ironfinger-896/prisma-us1
 
 # EU Cluster
 # cluster: public-nimbletail-691/prisma-eu1
 
-cluster: local
+# cluster: local
