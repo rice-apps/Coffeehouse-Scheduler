@@ -1,0 +1,29 @@
+mutation SetUserHours($netid: String!, $idealHour: Int, $maxHour: Int) {
+    updateUser(
+        netid: $netid,
+        idealHour: $idealHour,
+        maxHour: $maxHour
+    ) {
+        netid
+        idealHour
+        maxHour
+    }
+}
+
+mutation DeleteUser($netid: String!) {
+    deleteUser(netid: $netid) {
+        netid
+    }
+}
+
+mutation CreateUser($netid: String!) {
+    createUser(netid: $netid) {
+        id
+        netid
+        idealHour
+        maxHour
+        firstName
+        lastName
+        role
+    }
+}

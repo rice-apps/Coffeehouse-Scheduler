@@ -1,0 +1,13 @@
+mutation SaveUserPreference($netid: String!, $shiftAvailabilities: [shiftAvail!]!) {
+    updateShiftAvailabilities(
+        netid: $netid
+        shiftAvailabilities: $shiftAvailabilities
+    )
+}
+
+mutation SetUserPreference($id: Int!, $availability: Int!) {
+    updateShiftAvailability(
+        availabilityId: $id
+        availability: $availability
+    ) @client
+}
