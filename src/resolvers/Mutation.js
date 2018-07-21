@@ -138,35 +138,50 @@ async function createSchedule(parent, args, context, info) {
   // Build Shifts in each day
   let allShifts = []
   for (i in dayObjects) {
+    // Get day id
+    var id = dayObjects[i].id;
     // Shift Array for this specific day
     let dayShifts = []
-    // M-Th: iterate through hours 7am - midnight as starttimes of shifts
+    // Daily hours
+    var dailyOpen = 7;
+    var dailyClose = 24;
+    // M-Th: open through hours 7am - midnight
     if (i < 4) {
-      var startTime = 7;
-      var finalStartTime = 24;
+      var open = 7;
+      var close = 24;
     }
     // Friday: iterate through hours 7am - 5pm
     else if (i == 4) {
-      var startTime = 7;
-      var finalStartTime = 17;
+      var open = 7;
+      var close = 16;
     }
     // Saturday: iterate through hours 10am - 5pm
     else if (i == 5) {
-      var startTime = 10;
-      var finalStartTime = 17;
+      var open = 10;
+      var close = 16;
     }
     // Sunday: iterate through hours 2pm - midnight
     else if (i == 6) {
-      var startTime = 14;
-      var finalStartTime = 24;
+      var open = 14;
+      var close = 24;
     }
-    for (startTime; startTime <= finalStartTime; startTime++) {
+    for (var startTime = dailyOpen; startTime <= dailyClose; startTime++) {
       // Each shift is 1 hour long
       var endTime = startTime + 1;
+      // Set open or closed
+      if (startTime >= open && startTime <= close) {
+        var closed = false;
+      }
+      else {
+        var closed = true;
+      }
       // Create shift object
       var shift = context.db.mutation.createShift({
-        data: { startTime, endTime }
-      }, `{ id }`);
+        data: { 
+          startTime, endTime, closed, 
+          day: { connect: { id: id } } 
+        }
+      }, `{ id closed }`);
       // Add shift to list of shifts for day
       dayShifts.push(shift);
     }
@@ -179,36 +194,38 @@ async function createSchedule(parent, args, context, info) {
   console.log(allShifts);
   // Execute all tasks in parallel by using async to map thru each shift of each day
   allShifts.map(async (shiftArray) => shiftArray.map(async (shift) => {
-    for (let user of users) {
-      await context.db.mutation.updateShift({
-        /*
-        This is tricky. Let's walkthru it step by step.
-        1) data: represents data we want to UPDATE
-        2) availabilities: this is what aspect of updateShift we want to change
-        3) create: this is the command we need in order to CREATE a new element
-                   in the array. Command can be found in generated file; in the
-                   UserAvailabilityUpdateManyWithoutShiftInput input.
-        4) To create a UserAvailability object, we need to turn to the input of
-           UserAvailabilityCreateWithoutShiftInput, which specifies that the
-           properties of 'user' and 'availability' must be filled (altho availability
-           is optional). So we fill both fields out
-        5) Inside the user property, we need to create a relation between the User
-           object and this UserAvailability object. Thus, we use 'connect', and
-           only need to specify the id (as it is a unique property for each user).
-        6) Finally, since updateShift takes two arguments, we need to do the other
-           one, which is 'where'. This just allows us to specify which exact
-           shift object needs to be updated. In this case, we just specify the
-           id to be shift.id (obtained by map)
-        */
-        data: { availabilities: {
-          create: {
-            user: { connect: { id: user.id } },
-            availability: 0
-          }
-        } },
-        // Get current shift
-        where: { id: shift.id }
-      })
+    if (!shift.closed) {
+      for (let user of users) {
+        await context.db.mutation.updateShift({
+          /*
+          This is tricky. Let's walkthru it step by step.
+          1) data: represents data we want to UPDATE
+          2) availabilities: this is what aspect of updateShift we want to change
+          3) create: this is the command we need in order to CREATE a new element
+                     in the array. Command can be found in generated file; in the
+                     UserAvailabilityUpdateManyWithoutShiftInput input.
+          4) To create a UserAvailability object, we need to turn to the input of
+             UserAvailabilityCreateWithoutShiftInput, which specifies that the
+             properties of 'user' and 'availability' must be filled (altho availability
+             is optional). So we fill both fields out
+          5) Inside the user property, we need to create a relation between the User
+             object and this UserAvailability object. Thus, we use 'connect', and
+             only need to specify the id (as it is a unique property for each user).
+          6) Finally, since updateShift takes two arguments, we need to do the other
+             one, which is 'where'. This just allows us to specify which exact
+             shift object needs to be updated. In this case, we just specify the
+             id to be shift.id (obtained by map)
+          */
+          data: { availabilities: {
+            create: {
+              user: { connect: { id: user.id } },
+              availability: 0
+            }
+          } },
+          // Get current shift
+          where: { id: shift.id }
+        })
+      }
     }
   }));
   // No Promise.all needed because we awaited in previous command
@@ -227,10 +244,14 @@ async function createSchedule(parent, args, context, info) {
     dayUpdates.push(context.db.mutation.updateDay({
       data: {
         /*
-        allShifts[i] is a list of ids, which allows us to form relation between
+        allShifts[i] is a list of shift objects with id, which allows us to form relation between
         Shift Objects in allShifts and the shifts field of Day Object
         */
-        shifts: { connect: allShifts[i] }
+        shifts: { connect: allShifts[i].map( (shift) => {
+          // Decontruct to omit closed property
+          var { closed, ...shift } = shift;
+          return shift;
+        }) }
       },
       // Only adjusting corresponding Day Object; ensured to be unique because id
       where: { id: dayObjects[i].id }
@@ -318,14 +339,22 @@ async function updateShiftAvailabilities(parent, args, context, info) {
       context.db.mutation.updateManyUserAvailabilities({
         data: { availability: i },
         // Only updates shifts where user matches & shift matches with filteredShifts
-        where: { user: { netid_contains: args.netid }, shift: { id_in: filteredShifts } }
+        where: { user: { netid: args.netid }, shift: { id_in: filteredShifts } }
       })
     );
   }
   // console.log("Here!");
   // Execute all updates in parallel
   await Promise.all(availabilityUpdates);
-  return "Meme"
+  console.log(availabilityUpdates);
+  return "meme";
+}
+
+function updateShiftAvailability(parent, args, context, info) {
+  return context.db.mutation.updateUserAvailability({
+    data: { availability: args.availability },
+    where: { id: id }
+  }, `{ id }`);
 }
 
 /*
@@ -434,5 +463,6 @@ module.exports = {
   addUserToSchedules,
   createSchedule,
   deleteSchedule,
-  updateShiftAvailabilities
+  updateShiftAvailabilities,
+  updateShiftAvailability
 }

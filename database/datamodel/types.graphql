@@ -27,6 +27,8 @@ type Shift {
   id: ID! @unique
   startTime: Int!
   endTime: Int!
+  closed: Boolean!
+  day: Day! @relation(name: "DayofShift")
   availabilities: [UserAvailability!]! @relation(name: "AvailabilitiesOfShift", onDelete: CASCADE)
   scheduled: [User!]! @relation(name: "UsersScheduled")
 }

@@ -31,7 +31,7 @@ async function schedules(parent, args, context, info) {
   )
 }
 
-async function shifts(parent, args, context, info) {
+async function shift(parent, args, context, info) {
   return context.db.query.shifts(
     { where: { id: args.filter } },
     info
@@ -82,6 +82,6 @@ async function availabilities(parent, args, context, info) {
 module.exports = {
   users,
   schedules,
-  shifts,
+  shift,
   availabilities
 }

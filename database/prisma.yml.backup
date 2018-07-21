@@ -1,0 +1,26 @@
+# This file allows us to set preferences for PRISMA, which acts as an interface
+# to the database which plays nice with GraphQL
+
+# The service name, this will be part of the endpoint of the Prisma API
+service: chaus-graphql
+
+# The deployment stage, this will also be part of the API endpoint
+stage: dev
+
+# Points to the file that holds your data model
+datamodel:
+  - datamodel/types.graphql
+  - datamodel/enums.graphql
+
+# You can only access the API when providing JWTs that are signed with this secret
+secret: itsCHAUSbiatches
+
+# cluster: public-flameloon-112/prisma-us1
+
+# Real cluster US
+cluster: public-ironfinger-896/prisma-us1
+
+# EU Cluster
+# cluster: public-nimbletail-691/prisma-eu1
+
+# cluster: local

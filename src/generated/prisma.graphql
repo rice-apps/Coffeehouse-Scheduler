@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/will-mundy-9280b5/chaus-gql/dev
-# timestamp: Mon Jul 02 2018 01:30:49 GMT+0800 (HKT)
+# timestamp: Thu Jul 19 2018 19:44:39 GMT-0400 (EDT)
 
 type AggregateDay {
   count: Int!
@@ -50,6 +50,11 @@ input DayCreateInput {
 input DayCreateManyInput {
   create: [DayCreateInput!]
   connect: [DayWhereUniqueInput!]
+}
+
+input DayCreateOneInput {
+  create: DayCreateInput
+  connect: DayWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -135,9 +140,22 @@ input DayUpdateManyInput {
   upsert: [DayUpsertWithWhereUniqueNestedInput!]
 }
 
+input DayUpdateOneInput {
+  create: DayCreateInput
+  connect: DayWhereUniqueInput
+  delete: Boolean
+  update: DayUpdateDataInput
+  upsert: DayUpsertNestedInput
+}
+
 input DayUpdateWithWhereUniqueNestedInput {
   where: DayWhereUniqueInput!
   data: DayUpdateDataInput!
+}
+
+input DayUpsertNestedInput {
+  update: DayUpdateDataInput!
+  create: DayCreateInput!
 }
 
 input DayUpsertWithWhereUniqueNestedInput {
@@ -211,6 +229,9 @@ input DayWhereInput {
   _MagicalBackRelation_DaysOfSchedule_every: ScheduleWhereInput
   _MagicalBackRelation_DaysOfSchedule_some: ScheduleWhereInput
   _MagicalBackRelation_DaysOfSchedule_none: ScheduleWhereInput
+  _MagicalBackRelation_DayofShift_every: ShiftWhereInput
+  _MagicalBackRelation_DayofShift_some: ShiftWhereInput
+  _MagicalBackRelation_DayofShift_none: ShiftWhereInput
 }
 
 input DayWhereUniqueInput {
@@ -486,6 +507,8 @@ type Shift implements Node {
   id: ID!
   startTime: Int!
   endTime: Int!
+  closed: Boolean!
+  day(where: DayWhereInput): Day!
   availabilities(where: UserAvailabilityWhereInput, orderBy: UserAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserAvailability!]
   scheduled(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
@@ -503,6 +526,8 @@ type ShiftConnection {
 input ShiftCreateInput {
   startTime: Int!
   endTime: Int!
+  closed: Boolean!
+  day: DayCreateOneInput!
   availabilities: UserAvailabilityCreateManyWithoutShiftInput
   scheduled: UserCreateManyWithoutScheduledInput
 }
@@ -525,12 +550,16 @@ input ShiftCreateOneWithoutAvailabilitiesInput {
 input ShiftCreateWithoutAvailabilitiesInput {
   startTime: Int!
   endTime: Int!
+  closed: Boolean!
+  day: DayCreateOneInput!
   scheduled: UserCreateManyWithoutScheduledInput
 }
 
 input ShiftCreateWithoutScheduledInput {
   startTime: Int!
   endTime: Int!
+  closed: Boolean!
+  day: DayCreateOneInput!
   availabilities: UserAvailabilityCreateManyWithoutShiftInput
 }
 
@@ -550,6 +579,8 @@ enum ShiftOrderByInput {
   startTime_DESC
   endTime_ASC
   endTime_DESC
+  closed_ASC
+  closed_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -560,6 +591,7 @@ type ShiftPreviousValues {
   id: ID!
   startTime: Int!
   endTime: Int!
+  closed: Boolean!
 }
 
 type ShiftSubscriptionPayload {
@@ -604,6 +636,8 @@ input ShiftSubscriptionWhereInput {
 input ShiftUpdateDataInput {
   startTime: Int
   endTime: Int
+  closed: Boolean
+  day: DayUpdateOneInput
   availabilities: UserAvailabilityUpdateManyWithoutShiftInput
   scheduled: UserUpdateManyWithoutScheduledInput
 }
@@ -611,6 +645,8 @@ input ShiftUpdateDataInput {
 input ShiftUpdateInput {
   startTime: Int
   endTime: Int
+  closed: Boolean
+  day: DayUpdateOneInput
   availabilities: UserAvailabilityUpdateManyWithoutShiftInput
   scheduled: UserUpdateManyWithoutScheduledInput
 }
@@ -644,12 +680,16 @@ input ShiftUpdateOneWithoutAvailabilitiesInput {
 input ShiftUpdateWithoutAvailabilitiesDataInput {
   startTime: Int
   endTime: Int
+  closed: Boolean
+  day: DayUpdateOneInput
   scheduled: UserUpdateManyWithoutScheduledInput
 }
 
 input ShiftUpdateWithoutScheduledDataInput {
   startTime: Int
   endTime: Int
+  closed: Boolean
+  day: DayUpdateOneInput
   availabilities: UserAvailabilityUpdateManyWithoutShiftInput
 }
 
@@ -773,6 +813,11 @@ input ShiftWhereInput {
 
   """All values greater than or equal the given value."""
   endTime_gte: Int
+  closed: Boolean
+
+  """All values that are not equal to given value."""
+  closed_not: Boolean
+  day: DayWhereInput
   availabilities_every: UserAvailabilityWhereInput
   availabilities_some: UserAvailabilityWhereInput
   availabilities_none: UserAvailabilityWhereInput

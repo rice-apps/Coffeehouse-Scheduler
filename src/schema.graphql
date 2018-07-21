@@ -7,7 +7,7 @@ type Query {
   # Schedule queries
   schedules(filter: Int): [Schedule!]
   # Testing
-  shifts(filter: String): [Shift!]
+  shift(filter: String): [Shift!]
   availabilities(filter: String): [UserAvailability!]
 }
 
@@ -28,6 +28,7 @@ type Mutation {
   deleteSchedule(id: ID!): Schedule
   # Update multiple availabilities for user
   updateShiftAvailabilities(netid: String, shiftAvailabilities: [shiftAvail!]!): String
+  updateShiftAvailability(id: Int, availability: Int): UserAvailability
   # updateShiftScheduled(shiftId: ID!, user: User!, scheduled: Boolean): User!
   # signup(email: String!, password: String!, name: String!): AuthPayload
   # login(email: String!, password: String!): AuthPayload
