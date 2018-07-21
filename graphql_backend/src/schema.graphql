@@ -1,0 +1,45 @@
+# import User from "./generated/prisma.graphql"
+# import WEEKDAY, ROLE from "../database/datamodel/enums.graphql"
+
+type Query {
+  # Fetch all users or filter by first name, last name, or netid
+  users(filter: String): [User!]
+  # Schedule queries
+  schedules(filter: Int): [Schedule!]
+  # Testing
+  shift(filter: String): [Shift!]
+  availabilities(filter: String): [UserAvailability!]
+}
+
+type Mutation {
+  # User mutations
+  createUser(netid: String!, firstName: String, lastName: String,
+              idealHour: Int, maxHour: Int, totalHours: Int, role: ROLE): User!
+  updateUser(netid: String!, firstName: String, lastName: String,
+              idealHour: Int, maxHour: Int, totalHours: Int, role: ROLE): User
+  deleteUser(netid: String!): User!
+  # Login Process thru CAS
+  login(ticket: String!): User
+  # Build Schedule
+  createSchedule(weekNo: Int!): Schedule
+  # Add Existing User to Schedules
+  addUserToSchedules(netid: String!): User
+  # Delete Schedule
+  deleteSchedule(id: ID!): Schedule
+  # Update multiple availabilities for user
+  updateShiftAvailabilities(netid: String, shiftAvailabilities: [shiftAvail!]!): String
+  updateShiftAvailability(id: Int, availability: Int): UserAvailability
+  # updateShiftScheduled(shiftId: ID!, user: User!, scheduled: Boolean): User!
+  # signup(email: String!, password: String!, name: String!): AuthPayload
+  # login(email: String!, password: String!): AuthPayload
+}
+
+input shiftAvail {
+  shift: ID!
+  availability: Int!
+}
+
+# type AuthPayload {
+#   token: String
+#   user: User
+# }
