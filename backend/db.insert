@@ -1,0 +1,790 @@
+db.users.insert({
+	netid: "jhw5",
+	firstName: "Jeffrey",
+	lastName: "Wang",
+	idealHour: 8,
+	maxHour: 10,
+	totalHours: 0
+})
+
+db.users.insert({
+	netid: "scg5",
+	firstName: "Sydney",
+	lastName: "Garrett",
+	idealHour: 8,
+	maxHour: 10,
+	totalHours: 0
+})
+
+db.users.insert({
+	netid: "wsm3",
+	firstName: "Will",
+	lastName: "Mundy",
+	idealHour: 8,
+	maxHour: 10,
+	totalHours: 0
+})
+
+db.schedules.insert({"week": [{"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": true}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}, {"scheduled": [], "status": false}]})
+
+
+db.schedules.insert({  
+   "week":[  
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":true
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      },
+      {  
+         "scheduled":[  
+
+         ],
+         "status":false
+      }
+   ]
+})

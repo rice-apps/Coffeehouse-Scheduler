@@ -1,0 +1,1549 @@
+db.schedules.insert(
+{
+    "week": [
+        {
+            "day": "M",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": true,
+                    "schedule": [
+                        "jhw5"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 8,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "wsm3"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 9,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "abc1"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "jlt10",
+                        "abc1",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 10,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "abc1",
+                        "abc3",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "da30",
+                        "abc1",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 11,
+                    "status": true,
+                    "schedule": [
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 12,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jmd16",
+                        "abc2",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jmd16",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 13,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "cer8",
+                        "jmd16"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "wsm3",
+                        "jmd16",
+                        "abc3"
+                    ]
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "cer8",
+                        "wsm3"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "wsm3"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "abc2",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "jlt10",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 18,
+                    "status": true,
+                    "schedule": [
+                        "jmd16",
+                        "jlt10",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "jmd16",
+                        "jlt10",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 19,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jlt10",
+                        "abc3",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jmd16",
+                        "jlt10",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jmd16",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "wsm3",
+                        "jmd16",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 21,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "jmd16",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 22,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "jmd16"
+                    ],
+                    "availability": [
+                        "da30",
+                        "jmd16"
+                    ]
+                },
+                {
+                    "hour": 23,
+                    "status": true,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 24,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "cer8"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "cer8"
+                    ]
+                }
+            ]
+        },
+        {
+            "day": "T",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "jlt10",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 8,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "jlt10",
+                        "abc1",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 9,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "cer8",
+                        "wsm3",
+                        "jlt10",
+                        "abc1",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 10,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jmd16",
+                        "jlt10",
+                        "abc1",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 11,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "jmd16",
+                        "jlt10",
+                        "abc4",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 12,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 13,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "da30",
+                        "jmd16",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "abc1",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "wsm3",
+                        "da30",
+                        "jmd16",
+                        "jlt10",
+                        "abc1",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 18,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "da30",
+                        "abc1",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 19,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "da30",
+                        "abc1",
+                        "abc2",
+                        "abc4",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jmd16",
+                        "abc1",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 21,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "jmd16",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 22,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "jmd16",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 23,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 24,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "abc2",
+                        "abc4"
+                    ]
+                }
+            ]
+        },
+        {
+            "day": "W",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": true,
+                    "schedule": [
+                        "jhw5"
+                    ],
+                    "availability": [
+                        "jhw5"
+                    ]
+                },
+                {
+                    "hour": 8,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "wsm3"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "wsm3",
+                        "da30"
+                    ]
+                },
+                {
+                    "hour": 9,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "abc1"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "jlt10",
+                        "abc1"
+                    ]
+                },
+                {
+                    "hour": 10,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "abc1",
+                        "abc3",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "da30",
+                        "abc1",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 11,
+                    "status": true,
+                    "schedule": [
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 12,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jmd16",
+                        "abc2",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jmd16",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 13,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "cer8",
+                        "jmd16"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "wsm3",
+                        "jmd16",
+                        "abc3"
+                    ]
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "cer8",
+                        "wsm3"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "wsm3"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "jlt10",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "abc2",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "jlt10",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 18,
+                    "status": true,
+                    "schedule": [
+                        "jmd16",
+                        "jlt10",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "jmd16",
+                        "jlt10",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 19,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jlt10",
+                        "abc3",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jmd16",
+                        "jlt10",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jmd16",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "wsm3",
+                        "jmd16",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 21,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "jmd16",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 22,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "jmd16"
+                    ],
+                    "availability": [
+                        "da30",
+                        "jmd16"
+                    ]
+                },
+                {
+                    "hour": 23,
+                    "status": true,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 24,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "cer8"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "cer8"
+                    ]
+                }
+            ]
+        },
+        {
+            "day": "R",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "jlt10",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 8,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "jlt10",
+                        "abc1",
+                        "abc4",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 9,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "cer8",
+                        "wsm3",
+                        "jlt10",
+                        "abc1",
+                        "abc4",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 10,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jmd16",
+                        "jlt10",
+                        "abc1",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 11,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "jmd16",
+                        "jlt10",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 12,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 13,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "wsm3",
+                        "da30",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "da30",
+                        "jmd16",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "jmd16",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "wsm3",
+                        "abc1",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "wsm3",
+                        "da30",
+                        "jmd16",
+                        "jlt10",
+                        "abc1",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 18,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "da30",
+                        "abc1",
+                        "abc2",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 19,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "da30",
+                        "abc1",
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jmd16",
+                        "abc1",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 21,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "jmd16",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 22,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "jmd16",
+                        "abc2",
+                        "abc3",
+                        "abc4",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 23,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "abc2",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 24,
+                    "status": true,
+                    "schedule": [],
+                    "availability": [
+                        "jhw5",
+                        "abc2",
+                        "abc4"
+                    ]
+                }
+            ]
+        },
+        {
+            "day": "F",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "jmd16"
+                    ],
+                    "availability": [
+                        "da30",
+                        "jmd16"
+                    ]
+                },
+                {
+                    "hour": 8,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "abc1"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "jlt10",
+                        "abc1"
+                    ]
+                },
+                {
+                    "hour": 9,
+                    "status": true,
+                    "schedule": [
+                        "jmd16",
+                        "abc4"
+                    ],
+                    "availability": [
+                        "abc4",
+                        "abc1",
+                        "jmd16"
+                    ]
+                },
+                {
+                    "hour": 10,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "jmd16"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "jmd16",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 11,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "abc2",
+                        "abc1"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "abc1",
+                        "abc2",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 12,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "ob10",
+                        "cer8"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "jhw5",
+                        "cer8",
+                        "ob10"
+                    ]
+                },
+                {
+                    "hour": 13,
+                    "status": true,
+                    "schedule": [
+                        "jmd16",
+                        "ob10",
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "jmd16",
+                        "ob10",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "jmd16",
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "da30",
+                        "jmd16",
+                        "jlt10",
+                        "abc4",
+                        "abc2"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "jmd16",
+                        "jhw5"
+                    ],
+                    "availability": [
+                        "da30",
+                        "jmd16",
+                        "jhw5",
+                        "abc1"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jlt10",
+                        "abc3"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 18,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 19,
+                    "status": false,
+                    "schedule": [],
+                    "availability": [
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 21,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 22,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 23,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 24,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                }
+            ]
+        },
+        {
+            "day": "S",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 8,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 9,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 10,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "ob10"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "ob10",
+                        "jhw5"
+                    ]
+                },
+                {
+                    "hour": 11,
+                    "status": true,
+                    "schedule": [
+                        "jlt10",
+                        "cer8"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jhw5",
+                        "ob10",
+                        "jlt10",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 12,
+                    "status": true,
+                    "schedule": [
+                        "abc1",
+                        "abc2"
+                    ],
+                    "availability": [
+                        "abc1",
+                        "abc2",
+                        "abc3"
+                    ]
+                },
+                {
+                    "hour": 13,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "ob10",
+                        "abc2"
+                    ],
+                    "availability": [
+                        "ob10",
+                        "abc2",
+                        "cer8"
+                    ]
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [
+                        "da30",
+                        "abc3",
+                        "abc4",
+                        "jhw5"
+                    ],
+                    "availability": [
+                        "da30",
+                        "abc3",
+                        "abc4",
+                        "jhw5"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [
+                        "jhw5",
+                        "jlt10",
+                        "abc2"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "jlt10",
+                        "cer8",
+                        "abc2"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "ob10",
+                        "jhw5",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 18,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 19,
+                    "status": false,
+                    "schedule": [],
+                    "availability": [
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 21,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 22,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 23,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 24,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                }
+            ]
+        },
+        {
+            "day": "U",
+            "shifts": [
+                {
+                    "hour": 7,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 8,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 9,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 10,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 11,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 12,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 13,
+                    "status": false,
+                    "schedule": [],
+                    "availability": []
+                },
+                {
+                    "hour": 14,
+                    "status": true,
+                    "schedule": [
+                        "jmd16",
+                        "abc1"
+                    ],
+                    "availability": [
+                        "jmd16",
+                        "abc1",
+                        "abc2"
+                    ]
+                },
+                {
+                    "hour": 15,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jmd16",
+                        "abc2"
+                    ],
+                    "availability": [
+                        "cer8",
+                        "jmd16",
+                        "abc2",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 16,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "jhw5"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "ob10",
+                        "wsm3"
+                    ]
+                },
+                {
+                    "hour": 17,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "cer8",
+                        "jlt10"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "cer8",
+                        "jmd16",
+                        "jlt10"
+                    ]
+                },
+                {
+                    "hour": 18,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "jmd16",
+                        "abc2"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "cer8",
+                        "jmd16",
+                        "jlt10",
+                        "abc2"
+                    ]
+                },
+                {
+                    "hour": 19,
+                    "status": true,
+                    "schedule": [
+                        "cer8",
+                        "jhw5",
+                        "ob10"
+                    ],
+                    "availability": [
+                        "jhw5",
+                        "cer8",
+                        "ob10",
+                        "jlt10",
+                        "sz48",
+                        "owl1",
+                        "owl2"
+                    ]
+                },
+                {
+                    "hour": 20,
+                    "status": true,
+                    "schedule": [
+                        "jlt10",
+                        "abc3",
+                        "abc4",
+                        "cer8"
+                    ],
+                    "availability": [
+                        "jlt10",
+                        "jhw5",
+                        "cer8",
+                        "abc3",
+                        "abc4"
+                    ]
+                },
+                {
+                    "hour": 21,
+                    "status": true,
+                    "schedule": [
+                        "abc2",
+                        "wsm3",
+                        "ob10"
+                    ],
+                    "availability": [
+                        "abc1",
+                        "abc2",
+                        "ob10",
+                        "wsm3"
+                    ]
+                },
+                {
+                    "hour": 22,
+                    "status": true,
+                    "schedule": [
+                        "wsm3",
+                        "da30"
+                    ],
+                    "availability": [
+                        "wsm3",
+                        "da30",
+                        "cer8"
+                    ]
+                },
+                {
+                    "hour": 23,
+                    "status": true,
+                    "schedule": [
+                        "ob10",
+                        "da30"
+                    ],
+                    "availability": [
+                        "da30",
+                        "wsm3",
+                        "jhw5",
+                        "ob10"
+                    ]
+                },
+                {
+                    "hour": 24,
+                    "status": true,
+                    "schedule": [
+                        "abc2",
+                        "abc3"
+                    ],
+                    "availability": [
+                        "abc2",
+                        "abc3",
+                        "da30"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+)
