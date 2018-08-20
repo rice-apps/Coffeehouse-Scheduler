@@ -1,111 +1,112 @@
-# Coffeehouse Scheduler Summary Document
+## CoffeeeHouse Scheduler - Problem and Context
 
-The purpose of this document is to communicate the following:
+Purpose of this document is to provide further context regarding the Coffeehouse Scheduler. This is meant mostly for the coffeehouse scheduler team to better understand the nature of the problem in order to derive key product insights for the scheduler. 
 
-1. Immediate and extended goals of this project
-2. Landscape of Market Alternatives
-3. The functional scope of this scheduler
+## Context
 
-This document is meant for new on-boarding team members, the general public, and Coffeehouse stakeholders to better understand the overall details about the Coffeehouse Scheduler project. If you are interested in the developement and progress of this application, please refer to the Fall 18' Cofffeehouse Scheduler Product Requirement Document. 
+#### *Coffehouse Scheduling Problem*
+
+Rice Coffeehouse is a student-run business at Rice University that employs over forty employees and serves over 4000 students and faculty. For many at Rice, Coffeehouse serves as a central hub on campus to study, meet friends, and get caffeinated. As a result, Coffeehouse must hire a lot of student employees, formally known as “Keepers of Coffee” (KOC’s, aka baristas), to meet their high demand. 
+
+As a student-run business, student employees often have busy schedules and work part time during the academic year. Given the academic rigor at Rice University, each KOC has a weekly quota of hours that they can work. On the other hand, as the 2nd highest grossing coffeeshop in Houston, Coffeehouse has to meet tremendous business demands during peak hours.
+
+Thus, the combination of being a student run business whilst being the 2nd highest grossing coffeeshop adds several layers of complexity to the entire scheduling process -- making it difficult to schedule appropriate shifts for all employees while meeting the required number of employees per hour to keep Coffeehouse running smoothly. 
 
 
-### Table of Contents:
----
-  * [Overview](#overview) 
-  * [The Coffeehouse Scheduler](#the-coffeehouse-scheduler)
-    * [Mission and Motivation](#mission-and-motivation)
-    * [Users](#users)
-    * [Goals](#goals)
-    * [Market Alternatives and Underserved Needs](#market-alternatives-and-underserved-needs)
-    * [MVP Functional Scope](#mvp-functional-scope)
-    * [Beyond MVP](#beyond-mvp)
-  * [Team Organization & Responsibilities](#team-organization-and-responsibilities)
+#### *Current Situation*
 
----
+Using a combination of several Google Sheets, Google forms, and email to schedule employees leads to several issues:
 
-## Overview
-The Coffeehouse Scheduler simplifies the process for Coffeehouse to schedule employees. The scheduler provides an interface for employees to input their weekly availabilities, and an interface for a manager to use this information to schedule employees in an efficient and satisfactory manner. 
+1. Time-consuming and tedious process for the manager to schedule employees
+2. Unpleasing process for KOC's to input shift availabilities 
+3. Scheduling inefficiencies within the schedule due to visual clutter and rigid data structure of the existing scheduling system 
+5. Overall sense of confusion for all parties involved
+6. Difficult to trade shifts given the current system 
 
-In June, the Coffeehouse Scheduler successfully launched its Alpha testing phase after 10 months of development. Next year, the immediate objective is to build out the scheduler such that it completely replaces the current scheduling process which uses a combination of several Google Sheet documents and disorganized email discussion forum system. 
+#### *Underserved Need*
 
-Overtime, the ultimate goal is to build an autonomous scheduling application that automates at least 90% of the scheduling process, whilst maintaining the correctness and flexbility of Coffeehouse's scheduling process that caters to their heavy logistical demands. Overtime, our team is also looking towards building smart integrations with tools such as Google Calendar to provide a seamless scheduling process for Coffeehouse employees and managers. 
+**Is the scheduling process important?**
 
----
-# The Coffeehouse Scheduler
-## Mission and Motivation
-We aim to build a reliable, flexible, and user-friendly alternative that streamlines Coffeehouse's complicated and tedious scheduling pipeline with our application. 
+The scheduling process is extremely important for Coffeehouse to balance business demands while respecting the busy schedules of KOC's. In fact, a personnel manager would spend over 45 hours scheduling KOCs per semester. Having an effective schedule means that Coffeehouse can effectively take in more orders during peak hours and thus increase revenue. 
 
-We approximate that over **45+ hours** is spent on the scheduling process each semester. Our team hopes to reduce this number by **ten-fold** and eventually create an application that automates a large majority of the scheduling process. This way, Coffeehouse can spend more of their time on **high-value tasks**.
+**Are the users satisfied?**
 
-###### Users 
-This application is primarily built around the use cases and demands of Coffeehouse's personnel manager. 
-
-Primary User - Coffeehouse Personnel Manager
-Secondary User - KOC's
-
-###### Goals
-The immediate objective is to replace Google Sheets as the primary method of scheduling employees via a web application. Later on down the line, we hope to add features which would supercharge the scheduling process, including third-party integration with employee calendars and more. 
-
-Our long term mission is to  automate the process of scheduling employees through efficient scheduling algorithms and a provide robust set of features that would do more than a human could. 
-
-## Market Alternatives and Underserved Need
-Currently, there exists several tools that allows organizations to schedule employees, namely [Sling](https://getsling.com/), [Homebase](https://joinhomebase.com/), Excel, and Google Calendar.
+No. Currently, there exists several market tools that allows organizations to schedule employees, namely [Sling](https://getsling.com/), [Homebase](https://joinhomebase.com/), Excel, and Google Calendar.
 
 All of these schedulers provide generic, out of the box implementation for scheduling shifts. However, given Coffeehouse's scheduling process, using these tools would require Coffeehouse to design their scheduling process around the set of functionality and constraints provided by these tools. Instead, the Coffeehouse Scheduler team is designing an application around the Coffeehouse's unique and established scheduling process. In doing so, Coffeehouse wouldn't need to make any compromises to have a user-friendly, non-tedious alternative to their existing robust scheduling system.
 
-## MVP Functional Scope
+Given that Coffeehouse has a unique scheduling system catered specifically to their busiess, market alternatives doesn't satisfy main  use cases of Coffeehouse's scheduling process. Thus, our team is uniquely positioned to build a customized scheduling appliation for Coffeehouse that address their underserved need. 
 
-The goal of the MVP is to replace Google Sheets as a primary tool to collect KOC availability information and schedule KOC's. 
+#### *Problem Scope*
 
-Thus the functional scope of our MVP can be defined and broken down to the following: 
+It is important for us to distinguish the difference between the following two problem statements: 
 
-As a KOC, 
-* I can input my shift availability 
-* I can view my designated shift schedule
-* I can view whether other KOC's are available for a shift that I am scheduled for
-* I cannot view the availability of other KOC's
-* I can trade shifts with other KOC's
-* [Add-On] Need to be able to input availabilities and view schedule for multiple calendars
+ > 1. How might we create a reliable, flexible, and user-friendly alternative to schedule Coffeehouse employees, while meeting the logistical demands of Coffeehouse's scheduling process? 
+ > 
+> > **Included in problem scope of Coffeehouse Scheduler**
 
-As a Coffeehouse Personnel Manager,
-* I can view the availabilities of every KOC
-* I can view all relevant information to schedule KOC's for a single shift
-* I can schedule employees for every shift without violating scheduling rules (overscheduling/underscheduling employees, overscheduling/underscheduling for a shift, etc)
-* I can edit the # of employees required for a shift
-* I can add and remove employees
-* [Add-on] Need to be able to create/delete/schedule multiple calendars
+ > 2. How might we schedule employees such that it caters to the busy academic schedule of KOC's while satisfying the business and logistical demands of Coffeehouse?  
+ > 
+> > **Excluded in problem scope of Coffeehouse Scheduler**
 
-## Beyond MVP
-In light of Agile principles, this will be TBD when our team reach this stage. However, you can expect the functional scope to be primarily concerned with automation and third party integrations. 
+**This tool is not meant to redefine or design a new scheduling process for Coffeehouse. They already have an existing scheduling process that address their problems. They just need a tool to streamline and automate this process.**
+
+The first problem statement is concerned with creating a user-friendly and intuitive alternative to the existing scheduling tools, while the second problem statement is concerned with creating and defining a scheduling process that meets both the business demands of Coffeehouse and the academic schedules of KOC's. 
+
+The Coffeehouse Scheduler is looking to address the functional needs of the first statement. We will be leaving the responsibility and scope of the second problem statement to Coffeehouse's Personnel Manager. 
 
 
-## Team Organization and Responsibilities
 
-**Product Owner:** Will Mundy & Jeffrey Wang
-_Responsibilities:_ 
-* Resonsponsible for end to end delivery of this product
-* Define roadmap, vision, and strategy for product
-* Lead team according to roadmap, plan scrums & sprints, perform code review, make high-level product decisions
+#### Coffeehouse's Current Scheduling Process for a Semester
 
-**Scrum Master:** Rotational
-_Responsibilities:_ 
-* Takes notes at scrum
-* Responsible for managing the Zenhub board for the scrum & sprint (stories)
-* Responsible for removing blockers for team
-* Responsible for managing and updating documentation 
+**2 weeks before a semester begins** (15-20 Hours)
 
-**Developers:** Will Mundy, Jeffrey Wang, Jamie Tan, Justin Fan, Danny Andreini
-_Responsibilities:_ 
-* Code and particpate in all aspects of product planning and implementation
-* Provide ideas which supplement the features laid out in the vision and roadmap, provide insights, feedback, and questions pertaining to product and overall vision, come up with user stories to improve product, make decisions on execution of features
+1. Data collection
+    The personnel manager sends out a long google form for all employees to fill out their availability. The form collects data from each KOC about their preference (1-4) for each shift as well as their weekly working hour quota. 
 
-**Stakeholders:** Coffeehouse Personnel Manager (Sydney Garrett) and all KOC's
-_Responsibilities:_ 
-* Aid developement team in providing feedback during testing phases
-* Maintain direct communication with the team regarding changes for the scheduling process
-* Participate in bi-monthly session with development teams
 
----
+2. Spreadsheet Set-Up 
+    Once all employees submit their availabilities, the personnel transfers the collected data into normalized tables in a seperate Google Sheet document. The collected information is then manually copied onto seperate Google Sheets, each keeping track of different metrics/rules. On the final google sheet document, the personnel manager manually schedules employees for each shift by referencing several google sheets to ensure all rules are followed. 
 
+
+3. Fine Tuning
+    Once a schedule is finalized, it is sent out via email to employees. There, employees reply to the email about shift changes and shift trades. The personnel manager monitors this email discussion forum closely and manually incorporate the changes. The final schedule is sent out. 
+
+**Semester Begins** (4-5 Hours)
+    KOC's check their finalized shifts and arrive for their scheduled shifts. KOC's use email to make shift changes as their academic class schedule often change during the first two weeks (adding / dropping classes). During this time, Coffeehouse also conducts interviews for new hires.
+
+**Two week into the semester** (15-20 hours)
+By now, most KOC's have finalized their academic schedule and new hires are introduced to the team. The entire scheduling process is repeated. 
+
+
+## Findings from our Customer Research
+
+### Don't re-design the scheduling process (Problem Scope)
+The scheduling process is extremely complicated with multiple use cases. It has been perfected to meet the demands of CoffeeHouse over the years, given that we don't understand the business well enough, we should not aim to replace their existing process. Rather, we should aim to automate and streamline the existing process
+
+### Data Visualization
+Most of the time spent during the scheduling process is on switching between different excel worksheets. Each worksheet keeps track of a certain rule or metric, thus, to schedule employees for a single shifts, the personnel manager is required to check each google sheet to determine if an employee can be scheduled for a shift. 
+
+Insight: We need to identify information that is required in each use case, particularly for scheduling employees. Our UI should dipslay the necessary data in one place so that the personnel manager can make scheduling decisions.
+
+### Data Representation
+A huge part of why the scheduling process is so tedious is how the data is currently being represented. There is a lot of reduncy, the google sheets have overfilled cells, and it is difficult for a human to keep track of multiple congested excel sheets. 
+
+Insight: Our database needs to represent this data in a digestable manner that is flexible enough to query and manipulate while being efficiently stored on our DB.
+
+### Flexibility
+Coffeehouse often modify and tweek their scheduling process once a year. Our design decisions need to take into account that the scheduling process requires some level of flexibility. This means that our technology should be able to scale and manipulate data in different ways. 
+
+Insight: We will use a non-relational database (MongoDB) with GraphQL as an abstraction layer, in order to adapt to changes in the scheduling process. 
+
+### Reliability
+Scheduling is integral to how efficient CoffeeHouse runs. Thus, we need protocols in emergency cases when our server crashes or if our data gets corrupted. Uptime and availability are paramount to the success and adoption of this application. 
+
+Insight: We will host the data seperately from our servers. This way, if our servers crash or if the application crash, the data is completely recoverable. Virtual IP swapping could also be a possibility (to have two stages of deployment). (mlab)
+
+### Security
+KOC's will be inputing their availabilities throughout the semester. Implementing secure protocols is paramount to the safety of KOC's and the data they provide. 
+
+Insight: We will be using Rice IDP for authentiation, SSL connection, and rigid access controls. Use cases surrounding authentication and authorization needs to be thoroughly designed to meet the sufficient security requirements defined by Coffeehouse. 
 
 
