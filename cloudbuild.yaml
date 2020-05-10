@@ -1,0 +1,21 @@
+steps:
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+  dir: 'backend/'
+- name: 'gcr.io/cloud-builders/npm'
+  args: ["run", "create-env"]
+  env:
+    - 'MONGODB_CONNECTION_STRING=${_MONGODB_CONNECTION_STRING}'
+    - 'SERVICE_URL=${_SERVICE_URL}'
+  dir: 'backend/'
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy", "backend/api.yaml"]
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+  dir: 'frontend'
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+  dir: 'frontend'
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy", "frontend/client.yaml"]
+timeout: "1600s"
