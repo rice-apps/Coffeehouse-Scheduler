@@ -27,7 +27,8 @@
     "start": "node ./src/index.js",
     "watch": "nodemon ./src/index.js",
     "test": "mocha --opts mocha.opts src/**/*.spec.js",
-    "test:watch": "npm run test -- -w"
+    "test:watch": "npm run test -- -w",
+    "create-env": "printenv > .env"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -1,7 +1,12 @@
+require('dotenv').config();
+
+const MONGODB_CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING;
+const SERVICE_URL = process.env.SERVICE_URL;
+
 module.exports = {
     secret: 'TEST_SECRET',
-    db_uri: 'mongodb://jhw5:jhw5@ds143449.mlab.com:43449/chaus-production',
+    db_uri: MONGODB_CONNECTION_STRING,
     CASValidateURL: 'https://idp.rice.edu/idp/profile/cas/serviceValidate',
-    thisServiceURL: 'http://localhost:8080/auth',
+    thisServiceURL: SERVICE_URL,
     frontendURL: 'http://localhost:8080'
 };
