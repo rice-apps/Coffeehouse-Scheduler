@@ -1,6 +1,14 @@
 steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
+  dir: 'frontend'
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+  dir: 'frontend'
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy", "frontend/client.yaml"]
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
   dir: 'backend/'
 - name: 'gcr.io/cloud-builders/npm'
   args: ["run", "create-env"]
@@ -10,12 +18,4 @@ steps:
   dir: 'backend/'
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy", "backend/api.yaml"]
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
-  dir: 'frontend'
-- name: 'gcr.io/cloud-builders/npm'
-  args: ['run', 'build']
-  dir: 'frontend'
-- name: "gcr.io/cloud-builders/gcloud"
-  args: ["app", "deploy", "frontend/client.yaml"]
 timeout: "1600s"
