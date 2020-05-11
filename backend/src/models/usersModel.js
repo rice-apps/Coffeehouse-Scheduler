@@ -4,9 +4,9 @@ var mongoose     = require('mongoose')
 require('../db')
 
 var UserSchema = new Schema({
-    netid:{type: String},
-    firstName: {type: String},
-    lastName: {type: String},
+    netid: { type: String },
+    firstName: { type: String },
+    lastName: { type: String },
     role: {
         type: String,
         enum: ['user', 'admin'],
@@ -19,7 +19,5 @@ var UserSchema = new Schema({
 
 
 var User = mongoose.model("users", UserSchema)
-
-
 
 exports.user = User

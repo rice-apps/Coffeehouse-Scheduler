@@ -14,7 +14,7 @@
     "jsonwebtoken": "^8.2.1",
     "md5": "^2.2.1",
     "mongoosastic": "^4.3.0",
-    "mongoose": "^4.6.5",
+    "mongoose": "^5.9.13",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
     "passport": "^0.3.2",
@@ -24,7 +24,7 @@
     "xml2js": "^0.4.19"
   },
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "nodemon ./src/index.js",
     "watch": "nodemon ./src/index.js",
     "test": "mocha --opts mocha.opts src/**/*.spec.js",
     "test:watch": "npm run test -- -w",

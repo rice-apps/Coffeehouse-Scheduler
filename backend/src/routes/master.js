@@ -1,4 +1,4 @@
-const schedule = require('../models/scheduleModel').schedule;
+const Shift = require('../models/shiftsModel').shift;
 
 //++++++++++++++++++++++++++++++COMPLETED GET REQUESTS+++++++++++++++++++++++++++++++++++++++++
 /*
@@ -8,7 +8,7 @@ Input: None
 Output: Full schedule as specified in ScheduleModel
 */
 const getSchedule = (req, res) => {
-    schedule.find({}).exec((err, r) => {
+    Shift.find({}).exec((err, r) => {
         if (err) {
             res.send('error has occurred')
         } else {
@@ -32,7 +32,7 @@ Output: Shift JSON object showing:
 const getShift = (req, res) => {
   //.lean() for quick mongoose query
   //allShifts is what is returned from find({})
-  schedule.find({}).lean()
+  Shift.find({}).lean()
     .exec((err, allShifts) => {
     if (err) {
         res.send('error has occurred')
@@ -72,7 +72,7 @@ test: jhw5 has 27 instances.
 
 */
 const getHourTotal = (req, res) => {
-  schedule.find({}).lean().exec((err, allShifts) => {
+    Shift.find({}).lean().exec((err, allShifts) => {
     if (err) {
         res.send('error has occurred')
     }
@@ -124,7 +124,7 @@ const putSchedule = (req, res) => {
 	const p3 = req.body.p3;
 	const p4 = req.body.p4;
 	const new_sched = req.body.schedule;
-	schedule.find({}).exec((err, schedules) => {
+	Shift.find({}).exec((err, schedules) => {
 		console.log("new scheduled people:", new_sched);
 		var shift = schedules[0].week[shiftNum];
 		console.log("SHIFT before updates", shift);
@@ -179,7 +179,7 @@ Input:
 - need unique identifier for each shift!!!!
  */
 const putScheduled = (req, res) => {
-	schedule.find({}).lean()
+	Shift.find({}).lean()
 	  .exec((err, schedule) => {
 		  if (err) {
 			  res.send('error has occurred')
@@ -210,7 +210,7 @@ function updateShift(shifts, changedshift, netId) {
 
 const putAvailability = (req, res) => {
     const netId = req.params.netid;
-    schedule.find({}).exec((err, schedules) => {
+    Shift.find({}).exec((err, schedules) => {
         schedules[0].week.map(
             day => {
                 weekdayName = day.day

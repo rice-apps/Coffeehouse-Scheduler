@@ -9,7 +9,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const dotenv = require('dotenv')
 
 // Enable cross orgin resource sharing
 const enableCORS = function(req, res, next) {
@@ -24,23 +23,10 @@ const enableCORS = function(req, res, next) {
      }
 }
 
-/**
- * dotenv is a dependency that parses for a locally stored .env file 
- * and stores the variables to be accessed via process.env.
- * You need to set up a local .env file which contains the following 
- * environment variables:
-      secret: 
-      db_uri: 
-      CASValidateURL: 
-      thisServiceURL: 
-      frontendURL: 
- */
-const result = dotenv.config()
-if (result.error) {
-  throw result.error
-}
-console.log(result.parsed)
-
+// Connecting our declared routes in to our express app
+var userRouter = require('./routes/users')
+var scheduleRouter = require('./routes/schedule')
+var authRouter = require('./routes/auth')
 
 const app = express()
 app.use(bodyParser.urlencoded())
@@ -48,13 +34,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(enableCORS);
 
-
-// Connecting our declared routes in to our express app
-require('./routes/users')(app)
-require('./routes/master')(app)
-require('./routes/employee')(app)
-require('./routes/schedule')(app)
-require('./routes/auth')(app)
+// Setup routes
+app.use('/api/users', userRouter);
+app.use('/api/schedule', scheduleRouter);
+app.use('/api/auth', authRouter);
 
 // Get the port from the environment, i.e., Heroku sets it
 const port = process.env.PORT || 3000

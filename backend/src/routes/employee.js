@@ -1,12 +1,12 @@
 var _ = require('lodash')
-const schedule = require('../models/scheduleModel').schedule;
+const Shift = require('../models/shiftsModel').shift;
 
 const getEmployeeAvailability = (req, res) => {
   // Gets employee from url parameters
   const employee = req.params.netid
   const availabilityArray = []
   // Gets entire schedule
-  schedule.find({}).exec((err, shifts) => {
+  Shift.find({}).exec((err, shifts) => {
     // Array of shifts
     let week = shifts[0].week
     if (err) {
@@ -37,7 +37,7 @@ const getEmployeeScheduled = (req, res) => {
   const employee = req.params.netid
   const scheduledArray = []
   // Get entire schedule
-  schedule.find({}).exec((err, shifts) => {
+  Shift.find({}).exec((err, shifts) => {
     // Array of shifts
     let week = shifts[0].week
     if (err) {
@@ -102,7 +102,7 @@ const setEmployeeAvailability = (req, res) => {
   // Now data represented like: {changed: true/false, netid: preference#}
   const reformattedShifts = reformatShifts(inputShifts, employee)
   // Get Schedule
-  schedule.find({}).exec((err, shifts) => {
+  Shift.find({}).exec((err, shifts) => {
     // Array of already set shifts
     let week = shifts[0].week
     // Check if different input size; if so, stop
