@@ -15,7 +15,7 @@ const Home = ({ }) => {
             <Sidebar />
             <div style={{ display: "flex" }}>
                 <UserList style={{ flexGrow: 1 }} />
-                <Calendar style={{ flexGrow: 3 }} />
+                <Calendar style={{ flexGrow: 2 }} />
             </div>
         </div>
     )

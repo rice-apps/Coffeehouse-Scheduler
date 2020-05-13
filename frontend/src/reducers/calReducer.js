@@ -20,6 +20,7 @@ const CalReducer = (state=defaultCalReducerState, action) => {
         switch (action.type) {
             case ACTIONS.SET_SCHEDULE:
                 let newSchedule = {};
+                
                 // Split up schedule into days
                 let distinctDays = new Set(action.schedule.map(shift => shift.day));
 
@@ -43,6 +44,8 @@ const CalReducer = (state=defaultCalReducerState, action) => {
                 scheduleCopy[day][shiftIdx].preferences[prefIdx].preference = preference;
                 
                 return { ...state, schedule: scheduleCopy }
+            case ACTIONS.SET_TERM:
+                return { ...state, term: action.term }
             case ACTIONS.TOGGLE_MODAL:
                 return { ...state, modalOpen: !state.modalOpen, activeShiftDetails: action.shiftDetails };
             case ACTIONS.TOGGLE_CALENDAR_TYPE:

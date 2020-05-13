@@ -3,7 +3,7 @@ import { push } from 'connected-react-router'
 import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUESTED, GET_SERVICE, SAVE_SERVICE, SET_USER, SET_RECENT_UPDATE, SEEN_RECENT_UPDATE_SUCCESS, SEEN_RECENT_UPDATE_REQUEST, VERIFY_REQUESTED, AUTHENTICATE_REQUESTED } from '../actions/AuthActions';
 import { history } from '../configureStore';
 import { backendURL, serviceURL } from '../config';
-import { SET_SCHEDULE, UPDATE_PREFERENCE_REQUEST, UPDATE_PREFERENCE } from '../actions/CalActions';
+import { SET_SCHEDULE, UPDATE_PREFERENCE_REQUEST, UPDATE_PREFERENCE, CHANGE_TERM_REQUEST, SET_TERM } from '../actions/CalActions';
 
 // import Api from '...'
 
@@ -249,6 +249,22 @@ function* updatePreferenceRequest(action) {
     }
 }
 
+function* changeTermRequest(action) {
+    try {
+        // Request new term
+        let schedule = yield call(fetchSchedule, action.term);
+
+        // Set schedule
+        yield put({ type: SET_SCHEDULE, schedule });
+
+        // Set new term
+        yield put({ type: SET_TERM, term: action.term });
+    } catch (e) {
+        console.log(e.message);
+        yield put({ type: "CHANGE_TERM_REQUEST_FAILED", message: e.message });
+    }
+}
+
 /*
   Alternatively you may use takeLatest.
 
@@ -276,6 +292,10 @@ function* updatePreferenceWatcher() {
     yield takeLeading(UPDATE_PREFERENCE_REQUEST, updatePreferenceRequest);
 }
 
+function* changeTermWatcher() {
+    yield takeLatest(CHANGE_TERM_REQUEST, changeTermRequest);
+}
+
 export default function* rootSaga() {
     yield all([
         serviceWatcher(),
@@ -283,5 +303,6 @@ export default function* rootSaga() {
         authenticateWatcher(),
         verifyWatcher(),
         updatePreferenceWatcher(),
+        changeTermWatcher()
     ])
 };

@@ -10,6 +10,8 @@ export const TOGGLE_MODAL = "TOGGLE_MODAL";
 
 export const TOGGLE_CALENDAR_TYPE = "TOGGLE_CALENDAR_TYPE";
 
+export const CHANGE_TERM_REQUEST = "CHANGE_TERM_REQUEST";
+
 export const getTerm = () => {
     return {
         type: GET_TERM
@@ -47,5 +49,13 @@ export const toggleModal = (shiftDetails) => {
 export const toggleCalendarType = () => {
     return {
         type: TOGGLE_CALENDAR_TYPE
+    }
+}
+
+export const changeTerm = (term) => {
+    console.log(term);
+    return {
+        type: CHANGE_TERM_REQUEST,
+        term
     }
 }

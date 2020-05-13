@@ -11,6 +11,7 @@ import useModalOpen from '../../hooks/useModalOpen';
 import ColorLegend from '../color-legend';
 import ToggleCalendarType from './toggleCalendarType';
 import { dayAbbrev2Name } from '../../utils/calUtils';
+import SelectCalendarTerm from './selectCalendarTerm';
 
 let settings = {
     startTime: 7,
@@ -147,6 +148,7 @@ const Calendar = ({ schedule, user, isMasterCalendar }) => {
             </Grid>
             <ColorLegend legend={isMasterCalendar ? masterLegend : employeeLegend} />
             <ToggleCalendarType />
+            <SelectCalendarTerm />
             <div>
                 <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
             </div>
