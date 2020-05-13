@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react'
 import FlatButton from 'material-ui/FlatButton'
+import { Button } from '@material-ui/core';
 
 /*
 Input:
@@ -24,7 +25,7 @@ const ColorLegend = ({legend}) => {
                 var color = legend[setting];
                 return (
                     <div>
-                        <FlatButton style={{ backgroundColor: color, height: 15, minWidth: 15, marginTop: '-4.5px', marginRight: 5 }} />
+                        <Button variant={"outlined"} style={{ backgroundColor: color, height: 15, minWidth: 15, marginTop: '-4.5px', marginRight: 5 }} />
                         = {setting}
                     </div>
                 )

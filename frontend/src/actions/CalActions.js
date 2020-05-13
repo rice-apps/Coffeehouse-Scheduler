@@ -8,6 +8,8 @@ export const UPDATE_PREFERENCE = "UPDATE_PREFERENCE";
 
 export const TOGGLE_MODAL = "TOGGLE_MODAL";
 
+export const TOGGLE_CALENDAR_TYPE = "TOGGLE_CALENDAR_TYPE";
+
 export const getTerm = () => {
     return {
         type: GET_TERM
@@ -39,5 +41,11 @@ export const toggleModal = (shiftDetails) => {
     return {
         type: TOGGLE_MODAL,
         shiftDetails
+    }
+}
+
+export const toggleCalendarType = () => {
+    return {
+        type: TOGGLE_CALENDAR_TYPE
     }
 }

@@ -11,7 +11,7 @@ import * as ACTIONS from "../actions/CalActions"
 const defaultCalReducerState = {
     schedule: {},
     term: "Fall 2019",
-    calendarType: "master",
+    calendarType: true,
     modalOpen: false,
     activeShiftDetails: {}
 }
@@ -45,6 +45,8 @@ const CalReducer = (state=defaultCalReducerState, action) => {
                 return { ...state, schedule: scheduleCopy }
             case ACTIONS.TOGGLE_MODAL:
                 return { ...state, modalOpen: !state.modalOpen, activeShiftDetails: action.shiftDetails };
+            case ACTIONS.TOGGLE_CALENDAR_TYPE:
+                return { ...state, calendarType: !state.calendarType };
             default:
                 return {...state};
         }

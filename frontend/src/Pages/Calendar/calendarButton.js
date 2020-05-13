@@ -136,7 +136,7 @@ const CalendarButton = ({ calendarType, shiftDetails, user, toggleModal }) => {
     // If shiftDetails is null, then button is disabled
     let disabled = shiftDetails ? false : true;
 
-    if (calendarType == "employee") {
+    if (calendarType == true) {
         // Return employee
         return (
         <EmployeeButton 

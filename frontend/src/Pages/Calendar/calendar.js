@@ -8,6 +8,8 @@ import { Grid, Button } from '@material-ui/core';
 import CalendarButton from './calendarButton';
 import Modal from './modal';
 import useModalOpen from '../../hooks/useModalOpen';
+import ColorLegend from '../color-legend';
+import ToggleCalendarType from './toggleCalendarType';
 
 let settings = {
     startTime: 7,
@@ -129,18 +131,27 @@ const Day = ({ dayAbbrev, shifts }) => {
     )
 }
 
+const legend = {
+    "Empty": "#5fa55a",
+    "Has Room": "#f6d51f",
+    "Full Shift": "#fa8925",
+    "Overbooked": "#fa5457"
+}
+
 const Calendar = ({ schedule }) => {
     const [modalOpen, setModalOpen, toggle] = useModalOpen();
     console.log(modalOpen);
     let dayAbbrevs = orderedDays(schedule);
     return (
-        <div style={{ marginLeft: '100px'}}>
+        <div style={{ display: "flex",  margin: "auto", marginTop: "60px", width: '50%'}}>
             <Grid cols={8} container direction={'row'} spacing={0}>
                 <HourMarkers />
                 {dayAbbrevs.map(dayAbbrev => {
                     return (<Day key={dayAbbrev} dayAbbrev={dayAbbrev} shifts={schedule[dayAbbrev]} />)
                 })}
             </Grid>
+            <ColorLegend legend={legend} />
+            <ToggleCalendarType />
             <div>
                 <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
             </div>
