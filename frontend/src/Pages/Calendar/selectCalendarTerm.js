@@ -8,7 +8,7 @@ const SelectCalendarTerm = ({ term, changeTerm }) => {
 
     return (
         <Select
-            style={{ height: "15%", width: "20%", marginTop: "25px" }}
+            style={{ height: "15%", width: "20%", position: "relative", right: 60, top: 100 }}
             value={term}
             onChange={(event) => changeTerm(event.target.value)}
         >

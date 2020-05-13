@@ -140,7 +140,7 @@ const Calendar = ({ schedule, user, isMasterCalendar }) => {
 
     return (
         <div style={{ display: "flex",  margin: "auto", marginTop: "30px", width: '50%'}}>
-            <Grid cols={8} container direction={'row'} spacing={0}>
+            <Grid container direction={'row'} spacing={0} style={{ flexGrow: 4 }}>
                 <HourMarkers />
                 {dayAbbrevs.map(dayAbbrev => {
                     return (<Day key={dayAbbrev} dayAbbrev={dayAbbrev} shifts={schedule[dayAbbrev]} />)

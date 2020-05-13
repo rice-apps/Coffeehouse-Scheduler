@@ -9,7 +9,7 @@ const ToggleCalendarType = ({ isMasterCalendar, toggleCalendarType }) => {
     return (
         <Button
         variant={"contained"}
-        style={{ height: "15%", width: "20%" }}
+        style={{ height: "15%", width: "20%", position: "relative", left: 50 }}
         onClick={() => toggleCalendarType()}
         >
             Toggle To {isMasterCalendar ? "Employee" : "Master"}
