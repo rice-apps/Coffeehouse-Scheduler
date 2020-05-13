@@ -14,7 +14,6 @@ import Drawer from 'material-ui/Drawer';
 
 import {toggleMenu, changePage} from '../actions/sidebarActions';
 import MenuItem from 'material-ui/MenuItem';
-import {Link} from 'react-router-dom';
 
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 
@@ -79,7 +78,6 @@ export default connect(
         return {
             toggleMenu: () => dispatch({type:'TOGGLEBURGER'}),
             changePage: (page) => dispatch(changePage(page))
-
         }
     }
 )(SideBar)

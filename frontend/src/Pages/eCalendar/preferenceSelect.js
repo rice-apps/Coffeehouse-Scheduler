@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { toggle_availability } from '../../actions/employeeActions'
 //Material Imports
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
 import { Menu, Popover } from 'material-ui';
 import PreferenceMenuItem from './preferenceMenuItem';
 
@@ -75,7 +75,8 @@ class PreferenceButton extends React.Component {
         return (
             <div>
                 <div>
-                    <RaisedButton
+                    <Button
+                    raised
                     backgroundColor={changeColor(hour.available)}
                     onClick={this.handleClick} 
                     disabled={hour.closed}

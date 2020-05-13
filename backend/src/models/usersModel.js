@@ -14,7 +14,7 @@ var UserSchema = new Schema({
     },
     idealHour: Number,
     maxHour: Number,
-    totalHours: Number
+    token: String
 })
 
 

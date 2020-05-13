@@ -4,7 +4,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //Material Imports
-import {GridList, GridTile} from 'material-ui/GridList'
+import {GridList, GridListTile} from '@material-ui/core'
 import Subheader from 'material-ui/Subheader'
 //Inner Imports
 import CalendarHour from './calendar-hour'
@@ -42,7 +42,7 @@ const DayTitle = (dayname) => {
     }
 }
 
-const CalendarDay = ({dayname, day, users, user, get_availability, selectUser}) => {
+const CalendarDay = ({dayname, shifts, users, user, get_availability, selectUser}) => {
   return (
     <div style={styles.root}>
       <GridList
@@ -50,17 +50,15 @@ const CalendarDay = ({dayname, day, users, user, get_availability, selectUser}) 
         padding={0}
         style={styles.gridlist}
         cols={1}>
-          <GridTile>
-              <Subheader style={{padding: 2, display: 'flex'}}>{DayTitle(dayname)}</Subheader>
-          </GridTile>
-        {Object.keys(day).map(
+          <GridListTile>
+              <p style={{padding: 2, display: 'flex'}}>{DayTitle(dayname)}</p>
+          </GridListTile>
+        {shifts.map(
           (shift) => {
-            console.log(shift)
-            console.log(day[shift]);
             return (
-                <GridTile key={shift.toString()}>
-                      <CalendarHour key={shift.toString()} dayname={dayname} hour={day[shift]} />
-                </GridTile>
+                <GridListTile key={shift.hour}>
+                      <CalendarHour key={shift.hour} dayname={dayname} hour={shift.hour} />
+                </GridListTile>
             )
         }
         )}

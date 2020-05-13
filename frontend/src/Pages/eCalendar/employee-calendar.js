@@ -4,9 +4,10 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 //Material Imports
-import {GridList, GridTile} from 'material-ui/GridList'
-import Subheader from 'material-ui/Subheader'
+import { GridList, GridListTile } from '@material-ui/core'
+// import Subheader from 'material-ui/Subheader'
 import CalendarDay from './calendar-day'
+import { Grid } from '@material-ui/core'
 
 const styles = {
   root: {
@@ -32,8 +33,7 @@ const HourCount = () => {
     return hours
 }
 
-
-const EmployeeCalendar = ({mon, tues, wed, thurs, fri, sat, sun, user}) => {
+const EmployeeCalendar = ({schedule, mon, tues, wed, thurs, fri, sat, sun, user}) => {
   return (
     <div style={styles.root}>
 
@@ -43,7 +43,7 @@ const EmployeeCalendar = ({mon, tues, wed, thurs, fri, sat, sun, user}) => {
         style={styles.gridlist}
         cellHeight={730}
         >
-        <GridTile style={{marginTop: '-35px', height: 760}}>
+        <GridListTile style={{marginTop: '-35px', height: 760}}>
           <GridList
             cols={1}
             cellHeight={38}
@@ -51,38 +51,23 @@ const EmployeeCalendar = ({mon, tues, wed, thurs, fri, sat, sun, user}) => {
             style={styles.times}>
             {HourCount().map(
               (hour) => (
-                <GridTile>
-                  <Subheader style={{display: 'flex', justifyContent: 'flex-end'}}>{((hour)%12==0 ? (12):((hour)%12)).toString() + ":55" + ((hour) > 11 ? (" PM"):(" AM"))}</Subheader>
-                </GridTile>
+                <GridListTile key={hour}>
+                    <p key={hour} style={{display: 'flex', justifyContent: 'flex-end'}}>{((hour)%12==0 ? (12):((hour)%12)).toString() + ":55" + ((hour) > 11 ? (" PM"):(" AM"))}</p>
+                  {/* <Subheader key={hour} style={{display: 'flex', justifyContent: 'flex-end'}}>{((hour)%12==0 ? (12):((hour)%12)).toString() + ":55" + ((hour) > 11 ? (" PM"):(" AM"))}</Subheader> */}
+                </GridListTile>
               )
             )}
-            <GridTile>
-              <Subheader style={{display: 'flex', justifyContent: 'flex-end', marginTop: -9}}>Close</Subheader>
-            </GridTile>
+            <GridListTile>
+                <p style={{display: 'flex', justifyContent: 'flex-end', marginTop: -9}}>Close</p>
+              {/* <Subheader style={{display: 'flex', justifyContent: 'flex-end', marginTop: -9}}>Close</Subheader> */}
+            </GridListTile>
           </GridList>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"U"} day={sun} user={user}/>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"M"} day={mon} user={user}/>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"T"} day={tues} user={user}/>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"W"} day={wed} user={user}/>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"R"} day={thurs} user={user}/>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"F"} day={fri} user={user}/>
-        </GridTile>
-        <GridTile>
-            <CalendarDay dayname={"S"} day={sat} user={user}/>
-        </GridTile>
-
+        </GridListTile>
+        {Object.keys(schedule).map(dayName => {
+            return (
+                <CalendarDay key={dayName} dayname={dayName} shifts={schedule[dayName]} user={user} />
+            )
+        })}
       </GridList>
     </div>
   )
@@ -91,6 +76,7 @@ const EmployeeCalendar = ({mon, tues, wed, thurs, fri, sat, sun, user}) => {
 export default connect (
     (state) => {
         return {
+          schedule: state.cal.schedule,
           // schedules
           mon: state.eCal.scheduleReducer.schedule.M,
           tues: state.eCal.scheduleReducer.schedule.T,
@@ -100,7 +86,7 @@ export default connect (
           sat: state.eCal.scheduleReducer.schedule.S,
           sun: state.eCal.scheduleReducer.schedule.U,
           // user
-          user: state.eCal.activeReducer.user
+          user: state.auth.user
         }
     }
 )(EmployeeCalendar)

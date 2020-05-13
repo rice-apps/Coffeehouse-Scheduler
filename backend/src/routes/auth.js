@@ -40,10 +40,8 @@ var sendJSON = function (res, user, token) {
     res.json({
         success: true,
         message: 'CAS authentication success',
-        user: {
-            user: user,
-            token: token
-        }
+        user,
+        token
     });
 };
 
@@ -53,12 +51,15 @@ var sendJSON = function (res, user, token) {
  * the CAS server and then parse the response to see if we succeeded, and let the frontend know.
  */
 const getAuth = (req, res) => {
+    // Fetch ticket securely from custom header
+    var ticket = req.get('X-Ticket');
 
-    var ticket = req.query.ticket;
-    console.log("This is the ticket: " + ticket)
+    // Convert to string
+    ticket = String(ticket);
+
     if (ticket) {
         // validate our ticket against the CAS server
-        var url = `${config.CASValidateURL}?ticket=${ticket}&service=${config.thisServiceURL}`;
+        var url = `${config.CASValidateURL}?ticket=${ticket}&service=${config.SERVICE_URL}`;
         request(url, (err, response, body) => {
 
             if (err) res.status(500).send();
@@ -89,7 +90,7 @@ const getAuth = (req, res) => {
                         // Check if user has a token; if not, create for them
                         getOrCreateToken(user).then(token => {
                             sendJSON(res, user, token);
-                            res.json({ token, user });
+                            // res.json({ token, user });
                         })
                     });
                 } else if (serviceResponse.authenticationFailure) {
@@ -121,6 +122,7 @@ const getVerify = (req, res) => {
 }
 
 // Routes
-router.get('/auth', getAuth);
+router.get('/login', getAuth);
+router.get('/verify', getVerify);
 
 module.exports = router;

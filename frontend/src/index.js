@@ -1,31 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App";
-import LoginPage from "./Pages/login.js";
-import Auth from "./Pages/Auth/auth";
-import FullCalendar from "./Pages/eCalendar/full-calendar.js"
-import MFullCalendar from './Pages/mCalendar/master-calendar'
-import Reducer from './reducers/reducerCombined'
+import React, { Component } from 'react'
+import {render} from 'react-dom'
 import { Provider } from 'react-redux'
-import thunkMiddleware from 'redux-thunk'
+import App from './components/App'
 
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { ConnectedRouter } from 'connected-react-router'
 
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
+// Import store
+import configureStore, { history } from './configureStore';
 
-import {initializeStates, initializeUser} from './actions/userActions'
+const store = configureStore({});
 
+console.log("Store configured.");
 
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
-
-
-const store = createStore(
-    Reducer, applyMiddleware(thunkMiddleware)
-)
-initializeStates()(store.dispatch)
-initializeUser()(store.dispatch)
-ReactDOM.render(
+render(
     <Provider store={store}>
-        <App/>
-    </Provider>, document.getElementById('app')
-);
+        <ConnectedRouter history={history}>
+            <div>
+                <App />
+            </div>
+        </ConnectedRouter>
+    </Provider>, 
+    document.querySelector('#app')
+)

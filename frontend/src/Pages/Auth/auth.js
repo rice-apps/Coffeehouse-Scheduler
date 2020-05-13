@@ -1,56 +1,33 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import RaisedButton from 'material-ui/RaisedButton';
-import EmployeeCalendar from '../eCalendar/employee-calendar'
-import UserList from '../eCalendar/user-list'
-import ActiveSchedule from '../eCalendar/active-user-schedule'
-// Actions
-import { sendTicket } from '../../actions/authActions'
-import { initializeStates } from '../../actions/userActions';
+import React, { useState, useEffect } from "react";
+import {connect} from 'react-redux';
+import LoadingScreen from "../LoadingScreen";
+import { authenticateRequest } from "../../actions/AuthActions";
+import { Backdrop, CircularProgress, makeStyles } from "@material-ui/core";
 
-// Styles
-const divStyle = {
-  backgroundColor: '#5e6c8a',
-  height: '100vh'
-}
-
-const Auth = ({search, loggedIn, sendTicket, redirectUrl, users}) => {
-  // Call action which sends ticket to backend
-  sendTicket(search);
-  // Check whether user is logged in
-  console.log("checking if user is logged in...state: " + loggedIn)
-  if (loggedIn == true) {
-    console.log("logged in... Initializing states..")
-    console.log("redirecting...")
-    redirectUrl()
-    // initializeStates()
-    // console.log("INITIALIZED USERS: " + users)
-  }
-  return (
-    <MuiThemeProvider>
-      <div style={divStyle}>
-      </div>
-    </MuiThemeProvider>
-  )
-}
-
-/**
- * Connect method which calls 
- */
-export default connect (
-    (state, ownProps) => {
-      return {
-        search: ownProps.location.search,
-        loggedIn: state.auth.authReducer.authenticated,
-        users: state.eCal.userReducer.users
-      }
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
     },
-    (dispatch, ownProps) => {
-        return {
-          sendTicket: (search) => dispatch(sendTicket(search)),
-          redirectUrl: () => ownProps.history.push('/mcal'),
-          initialize_states: () => dispatch(initializeStates())
-        }
-    }
-)(Auth)
+  }));
+
+const Auth = ({ authenticateRequest }) => {
+    console.log("About to send request.")
+    authenticateRequest();
+    console.log("Sent request.")
+
+    return (
+        <LoadingScreen />
+    )
+}
+
+export default connect(
+    (state) => ({
+        
+    }),
+    (dispatch) => {
+        return ({
+            authenticateRequest: () => dispatch(authenticateRequest()),
+        });
+    },
+)(Auth);

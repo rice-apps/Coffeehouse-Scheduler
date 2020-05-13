@@ -142,6 +142,10 @@ const getHourTotal = async (req, res) => {
     // Get user
     let user = await User.findOne({ netid: netid });
 
+    /*
+    ElemMatch found here
+    https://codelikethis.com/lessons/db/mongodb-array-queries#anchor/matching_nested_array_documents
+    */
     let scheduledShifts = await Shift.find({
         term: term,
         preferences: {
@@ -368,7 +372,7 @@ const updateUserAvailability = async (req, res) => {
         { $set: { "preferences.$.preference": preference } }
     )
 
-    res.sendStatus(200);
+    res.send({ success: true, message: "Successful Update" });
 }
 
 router.get('/', getSchedule)

@@ -3,19 +3,16 @@
  */
 
  // Dependencies
-import React from 'react'
-import {connect} from 'react-redux'
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
+ import React, { Component } from 'react'
+ import { Switch, Route, Redirect } from 'react-router'
 
 // Pages
-import Sidebar from '../Pages/sidebar'
-import MFullCalendar from '../Pages/mCalendar/master-calendar'
-import Logo from '../Pages/chaus-logo'
-import FullCalendar from '../Pages/eCalendar/full-calendar'
+import FullCalendar from '../Pages/eCalendar/full-calendar';
 import LoginPage from '../Pages/login'
-import AddRemove from '../Pages/AddDrop/add-remove'
-import Auth from '../Pages/Auth/auth'
-import {Admin, User} from './InnerAuth'
+import Auth from '../Pages/Auth/Auth'
+import { connect } from 'react-redux'
+import { verifyRequest } from '../actions/AuthActions'
+import Main from "../Pages/main";
 
 // const Authorization = (allowedRoles) => (
 //     ({ component: Component, ...rest }) => (
@@ -28,29 +25,67 @@ import {Admin, User} from './InnerAuth'
 // );
 
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-        localStorage.getItem('token')
-            ? <Component {...props} />
-            : <Redirect to='/login' />
-    )} />
- )
-
-const App = () => {
-        return (
-            <div>
-                <BrowserRouter>
-                    <Switch>
-                        <PrivateRoute exact path='/' component={FullCalendar}/>
-                        <PrivateRoute path='/ecal' component={FullCalendar}/>
-                        <PrivateRoute path='/mcal' component={MFullCalendar} />
-                        <Route path='/login' component={LoginPage}/>
-                        <Route path='/auth' component={Auth} />
-                        <Route path='/addremove' component={Admin(AddRemove)} />
-                    </Switch>
-                </BrowserRouter>
-            </div>    
-        )
+const PrivateRoute = ({ children, loggedIn, verifyRequest, ...rest }) => {
+    return (
+        <Route {...rest} render={(props) => {
+            if (loggedIn) {
+                return (children);
+            } else {
+                // Check if token
+                if (localStorage.getItem('token')) {
+                    verifyRequest();
+                } else {
+                    // Redirect to login
+                    props.history.push("/login");
+                }
+            }
+        }} />
+    )
 }
 
-export default App
+const App = ({ loggedIn, verifyRequest }) => {
+    console.log("Inside app.");
+    return (
+        <Switch>
+            <PrivateRoute 
+            exact path='/' 
+            loggedIn={loggedIn} 
+            verifyRequest={verifyRequest}>
+                <FullCalendar />
+            </PrivateRoute>
+            <PrivateRoute 
+            path='/ecal' 
+            loggedIn={loggedIn} 
+            verifyRequest={verifyRequest}>
+                <FullCalendar />
+            </PrivateRoute>
+            <PrivateRoute 
+            path='/mcal' 
+            loggedIn={loggedIn} 
+            verifyRequest={verifyRequest}>
+                <FullCalendar />
+            </PrivateRoute>
+            <PrivateRoute
+            path='/cal'
+            loggedIn={loggedIn}
+            verifyRequest={verifyRequest}>
+                <Main />
+            </PrivateRoute>
+            <Route path='/login'>
+                <LoginPage />
+            </Route>
+            <Route path='/auth'>
+                <Auth />
+            </Route>
+        </Switch>  
+    )
+}
+
+export default connect(
+    (state) => ({
+        loggedIn: state.auth.loggedIn
+    }),
+    (dispatch) => ({
+        verifyRequest: () => dispatch(verifyRequest())
+    })
+)(App)

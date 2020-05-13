@@ -21,23 +21,21 @@ const legend = {
     "Unavailable": "#fa5457"
 }
 
-const FullCalendar = ({activeUserRole}) => {
+const FullCalendar = ({user}) => {
     
     return (
         <div>
-            <Sidebar/>
-            <MuiThemeProvider>
-                <div style={{display: 'flex', paddingTop: 60}}>
-                    <div style={{flexGrow: 0.3}} >
-                        {activeUserRole == 'admin'
-                        ? <UserList />
-                        : <UserInfo />}
-                    </div>
-                    <EmployeeCalendar/>
-                    <ActiveSchedule/>
-                    <ColorLegend legend={legend} />
+            {/* <Sidebar/> */}
+            <div style={{display: 'flex', paddingTop: 60}}>
+                {/* <div style={{flexGrow: 0.3}} >
+                    {user.role == 'admin'
+                    ? <UserList />
+                    : <UserInfo />}
+                </div> */}
+                <EmployeeCalendar/>
+                {/* <ActiveSchedule/> */}
+                {/* <ColorLegend legend={legend} /> */}
                 </div>
-            </MuiThemeProvider>
             <Logo/>
         </div>
     )
@@ -46,7 +44,7 @@ const FullCalendar = ({activeUserRole}) => {
 export default connect(
     (state) => {
         return {
-            activeUserRole: state.auth.activeUserReducer.role
+            user: state.auth.user
         }
     }
 )(FullCalendar)

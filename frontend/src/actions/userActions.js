@@ -3,7 +3,7 @@
  */
 import { resource } from './masterActions'
 import { get_availability, get_scheduled } from './employeeActions'
-import { getUserInfo } from './authActions';
+import { getUserInfo } from './AuthActions';
 
 
 /**

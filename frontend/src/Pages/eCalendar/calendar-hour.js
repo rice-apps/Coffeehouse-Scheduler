@@ -49,7 +49,7 @@ const changeColor2 = (preference) => {
 }
 
 const setButton = (dayname, hour) => {
-  if (dayname == 'S' && hour.hour == '24') {
+  if (dayname == 'S' && hour == '24') {
     return (
       <ChangeButton />
     )

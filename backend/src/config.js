@@ -19,6 +19,6 @@ module.exports = {
     secret: 'TEST_SECRET',
     MONGODB_CONNECTION_STRING: MONGODB_CONNECTION_STRING,
     CASValidateURL: 'https://idp.rice.edu/idp/profile/cas/serviceValidate',
-    thisServiceURL: SERVICE_URL,
+    SERVICE_URL: SERVICE_URL,
     frontendURL: 'http://localhost:8080'
 };
