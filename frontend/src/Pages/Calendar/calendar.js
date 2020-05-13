@@ -16,6 +16,21 @@ let settings = {
     endTime: 24 // exclusive
 }
 
+const masterLegend = {
+    "Empty": "#5fa55a",
+    "Has Room": "#f6d51f",
+    "Full Shift": "#fa8925",
+    "Overbooked": "#fa5457"
+}
+
+const employeeLegend = {
+    "Undetermined": "#01b4bc",
+    "Preferred": "#5fa55a",
+    "Available": "#f6d51f",
+    "Not Preferred": "#fa8925",
+    "Unavailable": "#fa5457"
+}
+
 /**
  * Helper Functions
  * @param {*} param0 
@@ -131,26 +146,19 @@ const Day = ({ dayAbbrev, shifts }) => {
     )
 }
 
-const legend = {
-    "Empty": "#5fa55a",
-    "Has Room": "#f6d51f",
-    "Full Shift": "#fa8925",
-    "Overbooked": "#fa5457"
-}
-
-const Calendar = ({ schedule }) => {
+const Calendar = ({ schedule, user, isMasterCalendar }) => {
     const [modalOpen, setModalOpen, toggle] = useModalOpen();
-    console.log(modalOpen);
     let dayAbbrevs = orderedDays(schedule);
+
     return (
-        <div style={{ display: "flex",  margin: "auto", marginTop: "60px", width: '50%'}}>
+        <div style={{ display: "flex",  margin: "auto", marginTop: "30px", width: '50%'}}>
             <Grid cols={8} container direction={'row'} spacing={0}>
                 <HourMarkers />
                 {dayAbbrevs.map(dayAbbrev => {
                     return (<Day key={dayAbbrev} dayAbbrev={dayAbbrev} shifts={schedule[dayAbbrev]} />)
                 })}
             </Grid>
-            <ColorLegend legend={legend} />
+            <ColorLegend legend={isMasterCalendar ? masterLegend : employeeLegend} />
             <ToggleCalendarType />
             <div>
                 <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
@@ -163,7 +171,8 @@ export default connect(
     (state) => {
         return {
             schedule: state.cal.schedule,
-            user: state.auth.user
+            user: state.auth.user,
+            isMasterCalendar: state.cal.isMasterCalendar
         }
     }
 )(Calendar)

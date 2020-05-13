@@ -132,27 +132,27 @@ const MasterButton = ({ shiftDetails, disabled, toggleModal }) => {
     )
 }
 
-const CalendarButton = ({ calendarType, shiftDetails, user, toggleModal }) => {
+const CalendarButton = ({ isMasterCalendar, shiftDetails, user, toggleModal }) => {
     // If shiftDetails is null, then button is disabled
     let disabled = shiftDetails ? false : true;
 
-    if (calendarType == true) {
-        // Return employee
-        return (
-        <EmployeeButton 
-        disabled={disabled} 
-        shiftDetails={shiftDetails} 
-        user={user}
-        />
-        )
-    } else {
+    if (isMasterCalendar) {
         // Return master
         return (
-        <MasterButton 
-        disabled={disabled} 
-        shiftDetails={shiftDetails}
-        toggleModal={toggleModal}
-        />
+            <MasterButton 
+            disabled={disabled} 
+            shiftDetails={shiftDetails}
+            toggleModal={toggleModal}
+            />
+        )
+    } else {
+        // Return employee
+        return (
+            <EmployeeButton 
+            disabled={disabled} 
+            shiftDetails={shiftDetails} 
+            user={user}
+            />
         )
     }
 }
@@ -160,7 +160,7 @@ const CalendarButton = ({ calendarType, shiftDetails, user, toggleModal }) => {
 export default connect(
     (state) => {
         return {
-            calendarType: state.cal.calendarType,
+            isMasterCalendar: state.cal.isMasterCalendar,
             user: state.auth.user
         }
     },

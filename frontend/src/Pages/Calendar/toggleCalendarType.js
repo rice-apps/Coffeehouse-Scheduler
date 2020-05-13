@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { connect } from "react-redux";
 import { toggleCalendarType } from "../../actions/CalActions";
 
-const ToggleCalendarType = ({ calendarType, toggleCalendarType }) => {
+const ToggleCalendarType = ({ isMasterCalendar, toggleCalendarType }) => {
 
     return (
         <Button
@@ -12,14 +12,14 @@ const ToggleCalendarType = ({ calendarType, toggleCalendarType }) => {
         style={{ height: "15%", width: "20%" }}
         onClick={() => toggleCalendarType()}
         >
-            Toggle To {calendarType ? "Master" : "Employee"}
+            Toggle To {isMasterCalendar ? "Employee" : "Master"}
         </Button>
     )
 }
 
 export default connect(
     (state) => ({
-        calendarType: state.cal.calendarType
+        isMasterCalendar: state.cal.isMasterCalendar
     }),
     (dispatch) => ({
         toggleCalendarType: () => dispatch(toggleCalendarType())

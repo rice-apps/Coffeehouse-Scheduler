@@ -6,12 +6,13 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
 import Calendar from './Calendar/calendar';
+import Sidebar from './Sidebar';
 
-const Home = ({ calendarType }) => {
-    console.log(calendarType);
+const Home = ({ }) => {
     return (
         <div>
-            <Calendar type={calendarType} />
+            <Sidebar />
+            <Calendar />
         </div>
     )
 }
@@ -19,7 +20,6 @@ const Home = ({ calendarType }) => {
 export default connect(
     (state) => {
         return {
-            calendarType: state.cal.calendarType,
             user: state.auth.user
         }
     }
