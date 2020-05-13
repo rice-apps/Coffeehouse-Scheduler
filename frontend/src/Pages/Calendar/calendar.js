@@ -10,6 +10,7 @@ import Modal from './modal';
 import useModalOpen from '../../hooks/useModalOpen';
 import ColorLegend from '../color-legend';
 import ToggleCalendarType from './toggleCalendarType';
+import { dayAbbrev2Name } from '../../utils/calUtils';
 
 let settings = {
     startTime: 7,
@@ -43,20 +44,6 @@ const orderedDays = (schedule) => {
     let dayAbbrevs = _orderedDayAbbrevs.filter(abbrev => _dayAbbrevs.includes(abbrev));
     
     return dayAbbrevs;
-}
-
-const dayAbbrev2Name = (abbrev) => {
-    let abbreviationsToNames = {
-        'M': "Mon",
-        'T': "Tues",
-        'W': "Wed",
-        'R': "Thurs",
-        'F': "Fri",
-        'S': "Sat",
-        'U': "Sun"
-    };
-
-    return abbreviationsToNames[abbrev];
 }
 
 /**

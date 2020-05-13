@@ -29,3 +29,17 @@ export const getPreferenceTitle = (preferenceNum) => {
     }
     return preferenceNum2Title[preferenceNum]
 }
+
+export const dayAbbrev2Name = (abbrev) => {
+    let abbreviationsToNames = {
+        'M': "Mon",
+        'T': "Tues",
+        'W': "Wed",
+        'R': "Thurs",
+        'F': "Fri",
+        'S': "Sat",
+        'U': "Sun"
+    };
+
+    return abbreviationsToNames[abbrev];
+}
