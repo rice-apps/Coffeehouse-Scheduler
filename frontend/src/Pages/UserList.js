@@ -23,7 +23,7 @@ const UserList = ({ schedule, user }) => {
             <Typography variant={"h6"}>
                 Scheduled Shifts
             </Typography>
-            {scheduledShifts.map(shift => (<p>{shiftToTime(shift)}</p>))}
+            {scheduledShifts.map(shift => (<p key={shift.day + shift.hour}>{shiftToTime(shift)}</p>))}
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { push } from 'connected-react-router'
 import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUESTED, GET_SERVICE, SAVE_SERVICE, SET_USER, SET_RECENT_UPDATE, SEEN_RECENT_UPDATE_SUCCESS, SEEN_RECENT_UPDATE_REQUEST, VERIFY_REQUESTED, AUTHENTICATE_REQUESTED } from '../actions/AuthActions';
 import { history } from '../configureStore';
 import { backendURL, serviceURL } from '../config';
-import { SET_SCHEDULE, UPDATE_PREFERENCE_REQUEST, UPDATE_PREFERENCE, CHANGE_TERM_REQUEST, SET_TERM } from '../actions/CalActions';
+import { SET_SCHEDULE, UPDATE_PREFERENCE_REQUEST, UPDATE_PREFERENCE, CHANGE_TERM_REQUEST, SET_TERM, SCHEDULE_USER_SHIFT_REQUEST, UNSCHEDULE_USER_SHIFT_REQUEST, SCHEDULE_USER, UNSCHEDULE_USER } from '../actions/CalActions';
 
 // import Api from '...'
 
@@ -84,6 +84,48 @@ const updatePreference = ({ term, day, hour, preference, user }) => {
         return response.json().then(body => {
             return body.success;
         })
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+const scheduleUser = ({ user, term, day, hour }) => {
+    let body = {
+        term: term,
+        day: day,
+        hour: hour,
+        netid: user.netid,
+    };
+    return fetch(backendURL + "/api/schedule/scheduleUser", {
+        method: "PUT",
+        headers: {
+            'Authorization': 'Bearer ' + config.token,
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(body)
+    }).then(response => {
+        return;
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+const unscheduleUser = ({ user, term, day, hour }) => {
+    let body = {
+        term: term,
+        day: day,
+        hour: hour,
+        netid: user.netid,
+    };
+    return fetch(backendURL + "/api/schedule/unscheduleUser", {
+        method: "PUT",
+        headers: {
+            'Authorization': 'Bearer ' + config.token,
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify(body)
+    }).then(response => {
+        return;
     }).catch(err => {
         console.log(err);
     })
@@ -258,6 +300,42 @@ function* changeTermRequest(action) {
     }
 }
 
+function* scheduleUserRequest(action) {
+    try {
+        let { user, shift } = action;
+        let { day, hour } = shift;
+        let state = yield select();
+        let { term } = state.cal;
+
+        // Send schedule request for the shift to the backend
+        yield fork(scheduleUser, { user, day, hour, term });
+
+        // Updated scheduled on the frontend
+        yield put({ type: SCHEDULE_USER, user, shift });
+    } catch (e) {
+        console.log(e.message);
+        yield put({ type: "SCHEDULE_USER_REQUEST_FAILED", message: e.message });
+    }
+}
+
+function* unscheduleUserRequest(action) {
+    try {
+        let { user, shift } = action;
+        let { day, hour } = shift;
+        let state = yield select();
+        let { term } = state.cal;
+
+        // Send unschedule request for the shift to the backend
+        yield fork(unscheduleUser, { user, day, hour, term });
+        
+        // Updated scheduled on the frontend (pop user from list)
+        yield put({ type: UNSCHEDULE_USER, user, shift });
+    } catch (e) {
+        console.log(e.message);
+        yield put({ type: "UNSCHEDULE_USER_REQUEST_FAILED", message: e.message });
+    }
+}
+
 /*
   Alternatively you may use takeLatest.
 
@@ -289,6 +367,14 @@ function* changeTermWatcher() {
     yield takeLatest(CHANGE_TERM_REQUEST, changeTermRequest);
 }
 
+function* scheduleUserWatcher() {
+    yield takeLatest(SCHEDULE_USER_SHIFT_REQUEST, scheduleUserRequest);
+}
+
+function* unscheduleUserWatcher() {
+    yield takeLatest(UNSCHEDULE_USER_SHIFT_REQUEST, unscheduleUserRequest);
+}
+
 export default function* rootSaga() {
     yield all([
         serviceWatcher(),
@@ -296,6 +382,8 @@ export default function* rootSaga() {
         authenticateWatcher(),
         verifyWatcher(),
         updatePreferenceWatcher(),
-        changeTermWatcher()
+        changeTermWatcher(),
+        scheduleUserWatcher(),
+        unscheduleUserWatcher()
     ])
 };

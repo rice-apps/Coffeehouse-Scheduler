@@ -12,6 +12,11 @@ export const TOGGLE_CALENDAR_TYPE = "TOGGLE_CALENDAR_TYPE";
 
 export const CHANGE_TERM_REQUEST = "CHANGE_TERM_REQUEST";
 
+export const SCHEDULE_USER_SHIFT_REQUEST = "SCHEDULE_USER_SHIFT_REQUEST";
+export const UNSCHEDULE_USER_SHIFT_REQUEST = "UNSCHEDULE_USER_SHIFT_REQUEST";
+export const SCHEDULE_USER = "SCHEDULE_USER";
+export const UNSCHEDULE_USER = "UNSCHEDULE_USER";
+
 export const getTerm = () => {
     return {
         type: GET_TERM
@@ -57,5 +62,21 @@ export const changeTerm = (term) => {
     return {
         type: CHANGE_TERM_REQUEST,
         term
+    }
+}
+
+export const scheduleUser = (user, shift) => {
+    return {
+        type: SCHEDULE_USER_SHIFT_REQUEST,
+        user,
+        shift
+    }
+}
+
+export const unscheduleUser = (user, shift) => {
+    return {
+        type: UNSCHEDULE_USER_SHIFT_REQUEST,
+        user,
+        shift
     }
 }
