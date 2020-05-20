@@ -6,16 +6,23 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
 import Calendar from './Calendar/calendar';
-import Sidebar from './Sidebar';
 import UserList from './UserList';
+import Modal from './Calendar/modal';
+import useModalOpen from '../hooks/useModalOpen';
+import HeaderBar from './HeaderBar';
 
 const Home = ({ }) => {
+    const [modalOpen, setModalOpen, toggle] = useModalOpen();
+
     return (
-        <div>
-            <Sidebar />
+        <div style={{ display: "grid", gridTemplateRows: "1fr 12fr" }}>
+            <HeaderBar />
             <div style={{ display: "flex" }}>
-                <UserList style={{ flexGrow: 1 }} />
-                <Calendar style={{ flexGrow: 2 }} />
+                <UserList style={{ flexBasis: 1 }} />
+                <Calendar />
+            </div>
+            <div>
+                <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
             </div>
         </div>
     )

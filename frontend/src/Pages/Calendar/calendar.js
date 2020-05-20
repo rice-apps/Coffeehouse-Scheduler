@@ -6,8 +6,6 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 import CalendarButton from './calendarButton';
-import Modal from './modal';
-import useModalOpen from '../../hooks/useModalOpen';
 import ColorLegend from '../color-legend';
 import ToggleCalendarType from './toggleCalendarType';
 import { dayAbbrev2Name } from '../../utils/calUtils';
@@ -135,22 +133,24 @@ const Day = ({ dayAbbrev, shifts }) => {
 }
 
 const Calendar = ({ schedule, user, isMasterCalendar }) => {
-    const [modalOpen, setModalOpen, toggle] = useModalOpen();
     let dayAbbrevs = orderedDays(schedule);
 
     return (
-        <div style={{ display: "flex",  margin: "auto", marginTop: "30px", width: '50%'}}>
-            <Grid container direction={'row'} spacing={0} style={{ flexGrow: 4 }}>
+        <div style={{ display: "flex", marginTop: "30px", flexGrow: 4 }}>
+            <Grid container direction={'row'} spacing={0} style={{ flexGrow: 3, width: "0%" }}>
                 <HourMarkers />
                 {dayAbbrevs.map(dayAbbrev => {
                     return (<Day key={dayAbbrev} dayAbbrev={dayAbbrev} shifts={schedule[dayAbbrev]} />)
                 })}
             </Grid>
-            <ColorLegend legend={isMasterCalendar ? masterLegend : employeeLegend} />
-            <ToggleCalendarType />
-            <SelectCalendarTerm />
-            <div>
-                <Modal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", flexGrow: 1 }}>
+                <div style={{ paddingBottom: "5%" }}>
+                    <ToggleCalendarType />
+                </div>
+                <SelectCalendarTerm />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "baseline", flexGrow: 1 }}>
+                <ColorLegend legend={isMasterCalendar ? masterLegend : employeeLegend} />
             </div>
         </div>
     )

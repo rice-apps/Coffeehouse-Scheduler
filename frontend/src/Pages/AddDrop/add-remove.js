@@ -11,7 +11,7 @@ import {List, ListItem} from 'material-ui/List';
 import {Container, Row, Col} from 'reactstrap';
 // Actions
 import {add_user, remove_user} from '../../actions/userActions'
-import Sidebar from '../sidebar.js'
+import HeaderBar from '../HeaderBar.js'
 
 
 const list_style = {

@@ -10,7 +10,7 @@ import { getUserScheduled, shiftToTime } from '../utils/userUtils';
 const UserList = ({ schedule, user }) => {
     let scheduledShifts = getUserScheduled(schedule, user)
     return (
-        <div style={{ margin: "50px 50px" }}>
+        <div style={{ margin: "50px 50px", flexGrow: 1 }}>
             <Typography variant={"h4"}>
                 Welcome, {user.netid}
             </Typography>

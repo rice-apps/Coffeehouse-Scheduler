@@ -158,14 +158,7 @@ function* authenticateRequest(action) {
 
         yield put({ type: SET_SCHEDULE, schedule });
 
-        // Redirect depending on role
-        if (user.role == "user") {
-            // Redirect to employee cal
-            yield call(history.push, "/ecal");
-        } else {
-            // Redirect to master cal
-            yield call(history.push, "/mcal");
-        }
+        yield call(history.push, "/cal");
     } catch (e) {
         yield put({ type: "LOGIN_REQUEST_FAILED", message: e.message });
         // yield call(history.push, "/error");

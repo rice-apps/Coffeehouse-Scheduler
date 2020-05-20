@@ -17,7 +17,7 @@ Ex:
 */
 const ColorLegend = ({legend}) => {
     return (
-        <div style={{position: 'absolute', right: 60, top: 105}}>
+        <React.Fragment>
             {   // Iterate through keys of object
                 Object.keys(legend).map((setting, index) => {
                 // Get color associated to setting
@@ -29,7 +29,7 @@ const ColorLegend = ({legend}) => {
                     </div>
                 )
             })}
-        </div>
+        </React.Fragment>
     )
 }
 

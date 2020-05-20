@@ -9,7 +9,7 @@ import EmployeeCalendar from './/employee-calendar'
 import UserList from './/user-list'
 import UserInfo from './/individualUserPage'
 import ActiveSchedule from './/active-user-schedule'
-import Sidebar from '../sidebar.js'
+import HeaderBar from '../HeaderBar.js'
 import Logo from '../chaus-logo.js'
 import ColorLegend from '../color-legend';
 

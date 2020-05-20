@@ -7,14 +7,17 @@ import { changeTerm } from "../../actions/CalActions";
 const SelectCalendarTerm = ({ term, changeTerm }) => {
 
     return (
-        <Select
-            style={{ height: "15%", width: "20%", position: "relative", right: 60, top: 100 }}
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "baseline", width: "6vw" }}>
+            <span style={{ justifySelf: "flex-start" }}>Term:</span>
+            <Select
+            style={{ justifySelf: "flex-end" }}
             value={term}
             onChange={(event) => changeTerm(event.target.value)}
-        >
-          <MenuItem value={"Fall 2019"}>Fall 2019</MenuItem>
-          <MenuItem value={"Spring 2020"}>Spring 2020</MenuItem>
-        </Select>
+            >
+                <MenuItem value={"Fall 2019"}>Fall 2019</MenuItem>
+                <MenuItem value={"Spring 2020"}>Spring 2020</MenuItem>
+            </Select>
+        </div>
     )
 }
 

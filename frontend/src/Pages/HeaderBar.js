@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { AppBar, Toolbar, IconButton, MenuIcon, Typography, Button, Divider, Link } from '@material-ui/core';
 import { changePath } from '../actions/RouteActions';
 
-const Sidebar = ({ changePath }) => {
+const HeaderBar = ({ changePath }) => {
     return (
         <AppBar position="static">
             <Toolbar>
@@ -44,4 +44,4 @@ export default connect(
             changePath: (path) => dispatch(changePath(path))
         }
     }
-)(Sidebar)
+)(HeaderBar)
