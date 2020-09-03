@@ -76,7 +76,7 @@
     "moment": "^2.13.0",
     "rimraf": "^2.5.4",
     "selenium-webdriver": "^2.53.2",
-    "serve": "^1.4.0",
+    "serve": "^10.1.2",
     "sinon": "^2.0.0-pre",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
