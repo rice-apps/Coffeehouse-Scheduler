@@ -73,7 +73,7 @@
     "material-ui": "^0.19.4",
     "mocha": "^2.4.5",
     "mock-fetch": "https://www.clear.rice.edu/comp431/sample/mock-fetch.tgz",
-    "moment": "^2.13.0",
+    "moment": "^2.29.4",
     "rimraf": "^2.5.4",
     "selenium-webdriver": "^2.53.2",
     "serve": "^1.4.0",
