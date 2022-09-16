@@ -40,7 +40,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.5.0",
     "bluebird": "^3.3.5",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "bootstrap-webpack": "0.0.5",
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
