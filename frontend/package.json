@@ -69,7 +69,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
     "less": "^2.7.1",
-    "loader-utils": "^0.2.15",
+    "loader-utils": "^1.4.2",
     "material-ui": "^0.19.4",
     "mocha": "^2.4.5",
     "mock-fetch": "https://www.clear.rice.edu/comp431/sample/mock-fetch.tgz",
